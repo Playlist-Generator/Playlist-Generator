@@ -1,6 +1,5 @@
 package com.example.playlistgeneratorv1.services;
-import com.example.playlistgeneratorv1.exceptions.EntityDuplicateException;
-import com.example.playlistgeneratorv1.exceptions.EntityNotFoundException;
+import com.example.playlistgeneratorv1.exceptions.AuthorizationException;
 import com.example.playlistgeneratorv1.models.User;
 import com.example.playlistgeneratorv1.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
+    private static final String DELETE_USER_ERROR_MESSAGE = "Only admin or User  can modify a user.";
     private final UserRepository repository;
 
     @Autowired
@@ -29,20 +29,19 @@ public class UserServiceImpl implements UserService {
     public User get(String username) {
         return repository.get(username);
     }
-
     @Override
-    public void create(User user) {
-        boolean duplicateExists = true;
-        try {
-            repository.get(user.getUsername());
+    public void delete(int id, User user) {
+        checkDeletePermissions(id, user);
+        repository.delete(id);
+    }
 
-        } catch (EntityNotFoundException e) {
-            duplicateExists = false;
+    private void checkDeletePermissions(int userId, User deletingUser) {
+        User existingUser = repository.get(userId);
+        if (!(deletingUser.isAdmin() || existingUser.getUsername().equals(deletingUser.getUsername()))) {
+            throw new AuthorizationException(DELETE_USER_ERROR_MESSAGE);
         }
+    }
 
-        if (duplicateExists) {
-            throw new EntityDuplicateException("User", "username", user.getUsername());
-        }
 
-        repository.create(user);
-    }}
+
+}

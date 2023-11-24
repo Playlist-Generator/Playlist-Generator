@@ -51,22 +51,21 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
+
+
+
+
     @Override
-    public void create(User user) {
+    public void delete(int id) {
+        User userToDelete = get(id);
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.persist(user);
+            session.remove(userToDelete);
             session.getTransaction().commit();
         }
     }
 
-    @Override
-    public void update(User user) {
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            session.merge(user);
-            session.getTransaction().commit();
-        }
-    }
+
+
 
 }

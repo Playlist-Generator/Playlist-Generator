@@ -15,7 +15,7 @@ public class Playlists {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    private Users user;
+    private User user;
 
     @Column(name = "title", length = 255)
     private String title;
@@ -40,12 +40,12 @@ public class Playlists {
         this.id = playlistId;
     }
 
-    public Users getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(Users users) {
-        this.user = users;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getTitle() {
