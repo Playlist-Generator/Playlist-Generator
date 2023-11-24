@@ -4,7 +4,7 @@ package com.example.playlistgeneratorv1.controller.rest;
 import com.example.playlistgeneratorv1.exceptions.AuthorizationException;
 import com.example.playlistgeneratorv1.exceptions.EntityNotFoundException;
 import com.example.playlistgeneratorv1.helpers.AuthenticationHelper;
-import com.example.playlistgeneratorv1.models.User;
+import com.example.playlistgeneratorv1.models.Users;
 import com.example.playlistgeneratorv1.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -29,10 +29,10 @@ public class UserRestController {
     }
 
     @GetMapping
-    public List<User> get(@RequestHeader HttpHeaders headers) {
+    public List<Users> get(@RequestHeader HttpHeaders headers) {
         try {
-            User user = authenticationHelper.tryGetUser(headers);
-            if (!user.isAdmin()) {
+            Users users = authenticationHelper.tryGetUser(headers);
+            if (!users.isAdmin()) {
                 throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, ERROR_MESSAGE);
             }
             return service.get();
@@ -42,10 +42,10 @@ public class UserRestController {
     }
 
     @GetMapping("/{id}")
-    public User get(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+    public Users get(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
-            User user = authenticationHelper.tryGetUser(headers);
-            checkAccessPermissions(id, user);
+            Users users = authenticationHelper.tryGetUser(headers);
+            checkAccessPermissions(id, users);
             return service.get(id);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
@@ -60,8 +60,8 @@ public class UserRestController {
 
 
 
-    private static void checkAccessPermissions(int targetUserId, User executingUser) {
-        if (!executingUser.isAdmin() && executingUser.getId() != targetUserId) {
+    private static void checkAccessPermissions(int targetUserId, Users executingUsers) {
+        if (!executingUsers.isAdmin() && executingUsers.getId() != targetUserId) {
             throw new AuthorizationException(ERROR_MESSAGE);
         }
     }

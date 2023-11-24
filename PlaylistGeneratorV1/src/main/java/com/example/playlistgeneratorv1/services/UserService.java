@@ -1,17 +1,17 @@
 package com.example.playlistgeneratorv1.services;
 
-import com.example.playlistgeneratorv1.models.User;
+import com.example.playlistgeneratorv1.models.Users;
 
 import java.util.List;
 
 public interface UserService {
 
-    List<User> get();
+    List<Users> get();
 
-    User get(int id);
+    Users get(int id);
 
-    User get(String username);
+    Users get(String username);
 
-    void create(User user);
+    void create(Users users);
 
 }
