@@ -4,11 +4,13 @@ package com.example.playlistgeneratorv1.controller.rest;
 import com.example.playlistgeneratorv1.exceptions.AuthorizationException;
 import com.example.playlistgeneratorv1.exceptions.EntityNotFoundException;
 import com.example.playlistgeneratorv1.helpers.AuthenticationHelper;
+import com.example.playlistgeneratorv1.models.RegisterDto;
 import com.example.playlistgeneratorv1.models.User;
 import com.example.playlistgeneratorv1.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -53,7 +55,15 @@ public class UserRestController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
-
+    @PostMapping
+    public ResponseEntity<User> create(@RequestBody RegisterDto registerDto) {
+        try {
+            User newUser = service.create(registerDto);
+            return new ResponseEntity<>(newUser, HttpStatus.CREATED);
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
+    }
 
 
     @DeleteMapping("/{id}")

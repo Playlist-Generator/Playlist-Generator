@@ -53,7 +53,13 @@ public class UserRepositoryImpl implements UserRepository {
 
 
 
-
+    public void create(User user) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.save(user);
+            session.getTransaction().commit();
+        }
+    }
 
     @Override
     public void delete(int id) {

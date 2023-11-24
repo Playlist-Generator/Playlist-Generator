@@ -1,4 +1,4 @@
-INSERT INTO Users (id, username, password, email, isadmin)
+INSERT INTO Users (id, username, password, email, is_admin)
 VALUES (1, 'johnDoe', 'password123', 'johndoe@example.com', false),
        (2, 'janeSmith', 'qwerty456', 'janesmith@example.com', true);
 

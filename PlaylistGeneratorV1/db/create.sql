@@ -1,9 +1,9 @@
 CREATE TABLE Users (
-                       id INT PRIMARY KEY,
-                       username VARCHAR(255),
+                       id INT PRIMARY KEY AUTO_INCREMENT,
+                       username VARCHAR(255) UNIQUE,
                        password VARCHAR(255),
                        email VARCHAR(255),
-                       isadmin BOOLEAN
+                       is_admin BOOLEAN
 );
 
 CREATE TABLE Playlists (
