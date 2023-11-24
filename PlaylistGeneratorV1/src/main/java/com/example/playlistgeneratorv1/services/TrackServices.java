@@ -1,7 +1,8 @@
 package com.example.playlistgeneratorv1.services;
 
 import com.example.playlistgeneratorv1.models.Tracks;
-import com.example.playlistgeneratorv1.models.Users;
+import com.example.playlistgeneratorv1.models.User;
+
 
 import java.util.List;
 
@@ -17,5 +18,5 @@ public interface TrackServices {
     void create(Tracks tracks);
 
     void update (Tracks tracks);
-    void delete (int id, Users users);
+    void delete (int id, User users);
 }

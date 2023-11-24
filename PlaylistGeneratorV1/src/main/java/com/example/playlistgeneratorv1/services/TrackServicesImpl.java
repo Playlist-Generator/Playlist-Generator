@@ -5,7 +5,7 @@ import com.example.playlistgeneratorv1.exceptions.AuthorizationException;
 import com.example.playlistgeneratorv1.exceptions.EntityDuplicateException;
 import com.example.playlistgeneratorv1.exceptions.EntityNotFoundException;
 import com.example.playlistgeneratorv1.models.Tracks;
-import com.example.playlistgeneratorv1.models.Users;
+import com.example.playlistgeneratorv1.models.User;
 import com.example.playlistgeneratorv1.repositories.TracksRepository;
 import com.example.playlistgeneratorv1.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +72,7 @@ public class TrackServicesImpl implements TrackServices {
     }
 
     @Override
-    public void delete(int id, Users user) {
+    public void delete(int id, User user) {
 
         if (user.isAdmin()) {
             tracksRepository.delete(id);

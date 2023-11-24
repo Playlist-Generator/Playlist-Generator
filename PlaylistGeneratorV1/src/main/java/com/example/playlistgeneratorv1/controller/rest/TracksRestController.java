@@ -6,7 +6,7 @@ import com.example.playlistgeneratorv1.exceptions.EntityDuplicateException;
 import com.example.playlistgeneratorv1.exceptions.EntityNotFoundException;
 import com.example.playlistgeneratorv1.helpers.AuthenticationHelper;
 import com.example.playlistgeneratorv1.models.Tracks;
-import com.example.playlistgeneratorv1.models.Users;
+import com.example.playlistgeneratorv1.models.User;
 import com.example.playlistgeneratorv1.services.TrackServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -86,7 +86,7 @@ public class TracksRestController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable int id, @RequestHeader HttpHeaders headers) {
         try {
-            Users user = authenticationHelper.tryGetUser(headers);
+            User user = authenticationHelper.tryGetUser(headers);
             trackServices.delete(id, user);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
