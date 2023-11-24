@@ -45,6 +45,14 @@ public class TracksRestController {
         return track;
     }
 
+    @GetMapping("/title/{title}")
+    public Tracks get(@PathVariable String title) {
+        Tracks track = trackServices.get(title);
+        if (track == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Track not found with title: " + title);
+        }
+        return track;
+    }
     @GetMapping("/genre/{genre}")
     public List<Tracks> getTracksByGenre(@PathVariable String genre) {
        List<Tracks> track = trackServices.getByGenre(genre);
