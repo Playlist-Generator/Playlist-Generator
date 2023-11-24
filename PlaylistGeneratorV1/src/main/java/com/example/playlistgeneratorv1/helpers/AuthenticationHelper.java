@@ -1,7 +1,7 @@
 package com.example.playlistgeneratorv1.helpers;
 import com.example.playlistgeneratorv1.exceptions.AuthorizationException;
 import com.example.playlistgeneratorv1.exceptions.EntityNotFoundException;
-import com.example.playlistgeneratorv1.models.User;
+import com.example.playlistgeneratorv1.models.Users;
 import com.example.playlistgeneratorv1.services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class AuthenticationHelper {
         this.userService = userService;
     }
 
-    public User tryGetUser(HttpHeaders headers) {
+    public Users tryGetUser(HttpHeaders headers) {
         if (!headers.containsKey(AUTHORIZATION_HEADER_NAME)) {
             throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
         }
@@ -31,7 +31,7 @@ public class AuthenticationHelper {
         return verifyAuthentication(username, password);
     }
 
-    public User tryGetCurrentUser(HttpSession session) {
+    public Users tryGetCurrentUser(HttpSession session) {
         String currentUsername = (String) session.getAttribute("currentUser");
 
         if (currentUsername == null) {
@@ -41,13 +41,13 @@ public class AuthenticationHelper {
         return userService.get(currentUsername);
     }
 
-    public User verifyAuthentication(String username, String password) {
+    public Users verifyAuthentication(String username, String password) {
         try {
-            User user = userService.get(username);
-            if (!user.getPassword().equals(password)) {
+            Users users = userService.get(username);
+            if (!users.getPassword().equals(password)) {
                 throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
             }
-            return user;
+            return users;
         } catch (EntityNotFoundException e) {
             throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
         }
