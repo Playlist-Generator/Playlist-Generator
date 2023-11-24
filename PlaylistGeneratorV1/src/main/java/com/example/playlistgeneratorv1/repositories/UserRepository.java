@@ -1,11 +1,11 @@
 package com.example.playlistgeneratorv1.repositories;
-import com.example.playlistgeneratorv1.models.Users;
+import com.example.playlistgeneratorv1.models.User;
 import java.util.List;
 
 public interface UserRepository {
-    List<Users> get();
-    Users get(int id);
-    Users get(String username);
-    void create(Users users);
-    void update(Users users);
+    List<User> get();
+    User get(int id);
+    User get(String username);
+    void create(User user);
+    void update(User user);
 }

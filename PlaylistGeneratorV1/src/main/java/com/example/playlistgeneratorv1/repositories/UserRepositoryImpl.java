@@ -1,6 +1,6 @@
 package com.example.playlistgeneratorv1.repositories;
 import com.example.playlistgeneratorv1.exceptions.EntityNotFoundException;
-import com.example.playlistgeneratorv1.models.Users;
+import com.example.playlistgeneratorv1.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -18,31 +18,31 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public List<Users> get() {
+    public List<User> get() {
         try (Session session = sessionFactory.openSession()) {
-            Query<Users> query = session.createQuery("from Users", Users.class);
+            Query<User> query = session.createQuery("from User", User.class);
             return query.list();
         }
     }
 
     @Override
-    public Users get(int id) {
+    public User get(int id) {
         try (Session session = sessionFactory.openSession()) {
-            Users users = session.get(Users.class, id);
-            if (users == null) {
+            User user = session.get(User.class, id);
+            if (user == null) {
                 throw new EntityNotFoundException("User", id);
             }
-            return users;
+            return user;
         }
     }
 
     @Override
-    public Users get(String name) {
+    public User get(String name) {
         try (Session session = sessionFactory.openSession()) {
-            Query<Users> query = session.createQuery(" from Users where username = :name", Users.class);
+            Query<User> query = session.createQuery(" from User where username = :name", User.class);
             query.setParameter("name", name);
 
-            List<Users> result = query.list();
+            List<User> result = query.list();
             if (result.size() == 0) {
                 throw new EntityNotFoundException("User", "username", name);
             }
@@ -52,19 +52,19 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void create(Users users) {
+    public void create(User user) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.persist(users);
+            session.persist(user);
             session.getTransaction().commit();
         }
     }
 
     @Override
-    public void update(Users users) {
+    public void update(User user) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.merge(users);
+            session.merge(user);
             session.getTransaction().commit();
         }
     }

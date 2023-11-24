@@ -1,13 +1,10 @@
 package com.example.playlistgeneratorv1.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.UniqueElements;
-
 import java.util.Objects;
 @Entity
 @Table(name = "users")
-public class Users {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,8 +12,6 @@ public class Users {
     private int id;
 
     @Column(name = "username")
-    @NotNull(message = "Username cannot be empty")
-    @UniqueElements
     private String username;
 
     @JsonIgnore
@@ -26,10 +21,10 @@ public class Users {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "isadmin")
+    @Column(name = "is_admin")
     private boolean isAdmin;
 
-    public Users() {
+    public User() {
     }
 
     public int getId() {
@@ -76,8 +71,8 @@ public class Users {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Users users = (Users) o;
-        return id == users.id;
+        User user = (User) o;
+        return id == user.id;
     }
 
     @Override
