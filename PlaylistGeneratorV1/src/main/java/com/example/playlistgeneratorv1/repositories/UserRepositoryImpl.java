@@ -60,6 +60,24 @@ public class UserRepositoryImpl implements UserRepository {
             session.getTransaction().commit();
         }
     }
+    @Override
+    public void update(int id, User updatedUser) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            User existingUser = session.get(User.class, id);
+            if (existingUser == null) {
+                throw new EntityNotFoundException("User", id);
+            }
+
+            existingUser.setUsername(updatedUser.getUsername());
+            existingUser.setPassword(updatedUser.getPassword());
+            existingUser.setEmail(updatedUser.getEmail());
+            existingUser.setAdmin(updatedUser.isAdmin());
+
+            session.saveOrUpdate(existingUser);
+            session.getTransaction().commit();
+        }
+    }
 
     @Override
     public void delete(int id) {

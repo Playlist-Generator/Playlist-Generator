@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
-    private static final String DELETE_USER_ERROR_MESSAGE = "Only admin or User  can modify a user.";
+    private static final String DELETE_USER_ERROR_MESSAGE = "Only admin or User  can delete a user.";
+    private static final String UPDATE_USER_ERROR_MESSAGE = "Only admin or User  can update a user.";
     private final UserRepository repository;
     private final UserMapper userMapper;
     @Autowired
@@ -42,13 +43,22 @@ public class UserServiceImpl implements UserService {
         return newUser;
     }
 
-
+    @Override
+    public void update(int id, User user) {
+        checkUpdatePermissions(id, user);
+        repository.update(id, user);
+    }
     @Override
     public void delete(int id, User user) {
         checkDeletePermissions(id, user);
         repository.delete(id);
     }
-
+    private void checkUpdatePermissions(int userId, User updatingUser) {
+        User existingUser = repository.get(userId);
+        if (!(updatingUser.isAdmin() || existingUser.getUsername().equals(updatingUser.getUsername()))) {
+            throw new AuthorizationException(UPDATE_USER_ERROR_MESSAGE);
+        }
+    }
     private void checkDeletePermissions(int userId, User deletingUser) {
         User existingUser = repository.get(userId);
         if (!(deletingUser.isAdmin() || existingUser.getUsername().equals(deletingUser.getUsername()))) {

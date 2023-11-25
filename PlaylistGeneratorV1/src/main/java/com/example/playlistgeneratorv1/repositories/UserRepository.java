@@ -7,6 +7,7 @@ public interface UserRepository {
     User get(int id);
     User get(String username);
     void create(User user);
+    void update(int id, User updatedUser);
     void delete(int id);
 
 

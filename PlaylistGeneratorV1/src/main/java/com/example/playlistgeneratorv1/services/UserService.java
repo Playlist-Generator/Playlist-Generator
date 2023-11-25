@@ -14,6 +14,7 @@ public interface UserService {
     User get(String username);
 
     User create(RegisterDto registerDto);
+    void update(int id, User updatedUser);
 
     void delete(int id, User user);
 }
