@@ -14,8 +14,8 @@ public class Artists {
     @Column(name = "name", length = 255)
     private String name;
 
-    @Column(name = "url", length = 255)
-    private String url;
+    @Column(name = "track_list", length = 255)
+    private String trackList;
 
     public Artists() {
     }
@@ -36,11 +36,11 @@ public class Artists {
         this.name = name;
     }
 
-    public String getUrl() {
-        return url;
+    public String getTrackList() {
+        return trackList;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setTrackList(String trackList) {
+        this.trackList = trackList;
     }
 }

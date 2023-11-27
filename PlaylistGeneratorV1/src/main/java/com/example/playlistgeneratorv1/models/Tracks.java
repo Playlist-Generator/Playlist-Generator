@@ -13,10 +13,6 @@ public class Tracks {
     private int id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "playlist_id")
-    private Playlists playlist;
-
-    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "album_id")
     private Albums album;
 
@@ -55,14 +51,6 @@ public class Tracks {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Playlists getPlaylist() {
-        return playlist;
-    }
-
-    public void setPlaylist(Playlists playlist) {
-        this.playlist = playlist;
     }
 
     public Albums getAlbum() {

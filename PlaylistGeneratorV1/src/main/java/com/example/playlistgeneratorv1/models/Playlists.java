@@ -21,9 +21,6 @@ public class Playlists {
     @Column(name = "title", length = 255)
     private String title;
 
-    @Column(name = "tags", length = 255)
-    private String tags;
-
     @Column(name = "total_playtime")
     private Integer totalPlaytime;
 
@@ -60,14 +57,6 @@ public class Playlists {
         this.title = title;
     }
 
-    public String getTags() {
-        return tags;
-    }
-
-    public void setTags(String tags) {
-        this.tags = tags;
-    }
-
     public int getTotalPlaytime() {
         return totalPlaytime;
     }
@@ -91,14 +80,14 @@ public class Playlists {
         }
         tracks.add(track);
 
-        track.setPlaylist(this);
+
     }
 
     public void removeTrack(Tracks track) {
         if (tracks != null) {
             tracks.remove(track);
 
-            track.setPlaylist(null);
+
         }
     }
 

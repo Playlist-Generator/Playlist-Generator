@@ -1,11 +1,14 @@
 package com.example.playlistgeneratorv1.models;
 
+import java.util.List;
+
 public class PlaylistDto {
     private Integer id;
     private String title;
     private String tags;
     private Integer totalPlaytime;
     private Integer averageRank;
+    private List<Tracks> tracks;
 
     public Integer getId() {
         return id;
@@ -47,6 +50,13 @@ public class PlaylistDto {
         this.averageRank = averageRank;
     }
 
+    public List<Tracks> getTracks() {
+        return tracks;
+    }
+
+    public void setTracks(List<Tracks> tracks) {
+        this.tracks = tracks;
+    }
 
     public PlaylistDto(Integer id, String title, String tags, Integer totalPlaytime, Integer averageRank) {
         this.id = id;

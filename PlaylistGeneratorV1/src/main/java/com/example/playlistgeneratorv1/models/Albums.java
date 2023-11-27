@@ -14,7 +14,7 @@ public class Albums {
     @Column(name = "title", length = 255)
     private String title;
 
-    @Column(name = "track_list", length = 255)
+    @Column(name = "tracklist_url", length = 255)
     private String trackList;
 
     public Albums() {
