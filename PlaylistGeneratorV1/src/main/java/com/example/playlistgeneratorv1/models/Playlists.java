@@ -2,6 +2,7 @@ package com.example.playlistgeneratorv1.models;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -28,6 +29,9 @@ public class Playlists {
 
     @Column(name = "average_rank")
     private Integer averageRank;
+
+    @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Tracks> tracks;
    public Playlists() {
 
     }
@@ -78,6 +82,24 @@ public class Playlists {
 
     public void setAverageRank(int averageRank) {
         this.averageRank = averageRank;
+    }
+
+
+    public void addTrack(Tracks track) {
+        if (tracks == null) {
+            tracks = new ArrayList<>();
+        }
+        tracks.add(track);
+
+        track.setPlaylist(this);
+    }
+
+    public void removeTrack(Tracks track) {
+        if (tracks != null) {
+            tracks.remove(track);
+
+            track.setPlaylist(null);
+        }
     }
 
     @Override
