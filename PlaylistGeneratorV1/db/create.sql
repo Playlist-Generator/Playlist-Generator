@@ -7,7 +7,7 @@ CREATE TABLE Users (
 );
 
 CREATE TABLE Playlists (
-                           id INT PRIMARY KEY,
+                           id INT PRIMARY KEY AUTO_INCREMENT,
                            user_id INT,
                            title VARCHAR(255),
                            tags VARCHAR(255),
