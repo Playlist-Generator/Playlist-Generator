@@ -13,13 +13,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/playlists")
-public class PlaylistController {
+public class PlaylistRestController {
 
     private final PlaylistService playlistService;
     private final AuthenticationHelper authenticationHelper;
 
     @Autowired
-    public PlaylistController(PlaylistService playlistService, AuthenticationHelper authenticationHelper) {
+    public PlaylistRestController(PlaylistService playlistService, AuthenticationHelper authenticationHelper) {
         this.playlistService = playlistService;
         this.authenticationHelper = authenticationHelper;
     }

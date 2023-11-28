@@ -1,6 +1,7 @@
 package com.example.playlistgeneratorv1.services;
 import com.example.playlistgeneratorv1.models.Genres;
-import com.example.playlistgeneratorv1.repositories.GenresRepository;
+import com.example.playlistgeneratorv1.repositories.contracts.GenresRepository;
+import com.example.playlistgeneratorv1.services.contracts.GenresService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

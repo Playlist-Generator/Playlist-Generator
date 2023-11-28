@@ -69,7 +69,7 @@ public class PlaylistRepositoryImpl implements PlaylistRepository {
             if (playlist == null) {
                 throw new EntityNotFoundException("Playlists", id);
             }
-            session.delete(playlist);
+            session.remove(playlist);
             session.getTransaction().commit();
         }
     }

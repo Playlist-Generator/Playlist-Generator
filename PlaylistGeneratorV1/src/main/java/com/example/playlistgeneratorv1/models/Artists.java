@@ -3,7 +3,7 @@ package com.example.playlistgeneratorv1.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Artist")
+@Table(name = "Artists")
 public class Artists {
 
     @Id

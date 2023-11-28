@@ -1,5 +1,6 @@
 package com.example.playlistgeneratorv1.repositories;
 
+import com.example.playlistgeneratorv1.models.Albums;
 import com.example.playlistgeneratorv1.models.Tracks;
 import com.example.playlistgeneratorv1.repositories.contracts.TracksRepository;
 import org.hibernate.Session;
@@ -61,9 +62,15 @@ public class TracksRepositoryImpl implements TracksRepository {
                     "SELECT t FROM Tracks t JOIN t.genre g WHERE g.genre = :genre", Tracks.class);
             query.setParameter("genre", genre);
 
-            return query.list();
+            List<Tracks> tracks = query.list();
+            if (tracks.isEmpty()) {
+                throw new EntityNotFoundException("Tracks", "genre", genre);
+            }
+            return tracks;
         }
     }
+
+
 
     @Override
     public void create(Tracks track) {

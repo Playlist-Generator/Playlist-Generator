@@ -3,8 +3,7 @@ package com.example.playlistgeneratorv1.controller.rest;
 import com.example.playlistgeneratorv1.helpers.AuthenticationHelper;
 import com.example.playlistgeneratorv1.models.Genres;
 import com.example.playlistgeneratorv1.models.User;
-import com.example.playlistgeneratorv1.repositories.GenresRepository;
-import com.example.playlistgeneratorv1.services.GenresService;
+import com.example.playlistgeneratorv1.services.contracts.GenresService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
@@ -13,16 +12,16 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/genres")
-public class GenresController {
+public class GenresRestController {
 
 
     private final AuthenticationHelper authenticationHelper;
     private final GenresService genresService;
     @Autowired
-    public GenresController( AuthenticationHelper authenticationHelper, GenresService genresService) {
+    public GenresRestController(AuthenticationHelper authenticationHelper, GenresService genresService) {
 
         this.authenticationHelper = authenticationHelper;
-        this.genresService =genresService;
+        this.genresService = genresService;
     }
 
     @GetMapping
