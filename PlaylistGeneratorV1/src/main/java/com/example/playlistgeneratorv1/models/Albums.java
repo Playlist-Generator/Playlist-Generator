@@ -17,6 +17,11 @@ public class Albums {
     @Column(name = "tracklist_url", length = 255)
     private String trackList;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "genres_id")
+    private Genres genre;
+
+
     public Albums() {
     }
 
