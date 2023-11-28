@@ -51,13 +51,13 @@ public class PlaylistRestController {
         playlistService.delete(id);
     }
 
-    @PostMapping("/{playlistId}/addTrack/{trackId}")
+/*    @PostMapping("/{playlistId}/addTrack/{trackId}")
     public void addTrack(@PathVariable int playlistId, @PathVariable int trackId) {
         playlistService.addTrack(playlistId, trackId);
     }
     @PostMapping("/{playlistId}/deleteTrack/{trackId}")
     public void deleteTrack(@PathVariable int playlistId, @PathVariable int trackId) {
         playlistService.removeTrack(playlistId, trackId);
-    }
+    }*/
 
 }

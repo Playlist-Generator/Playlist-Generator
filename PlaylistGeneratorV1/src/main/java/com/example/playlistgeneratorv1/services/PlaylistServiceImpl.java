@@ -57,12 +57,12 @@ public class PlaylistServiceImpl implements PlaylistService {
         playlistRepository.delete(id);
     }
 
-    @Override
-    public void addTrack(int playlistId, int trackId) {
-        playlistRepository.addTrack(playlistId, trackId);
-    }
-    @Override
-    public void removeTrack(int playlistId, int trackId) {
-        playlistRepository.removeTrack(playlistId, trackId);
-    }
+//    @Override
+//    public void addTrack(int playlistId, int trackId) {
+//        playlistRepository.addTrack(playlistId, trackId);
+//    }
+//    @Override
+//    public void removeTrack(int playlistId, int trackId) {
+//        playlistRepository.removeTrack(playlistId, trackId);
+//    }
 }

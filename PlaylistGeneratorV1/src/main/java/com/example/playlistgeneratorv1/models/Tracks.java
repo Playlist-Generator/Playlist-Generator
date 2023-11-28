@@ -30,7 +30,7 @@ public class Tracks {
     @Column(name = "link", length = 255)
     private String link;
 
-    @Column(name = "artist", length = 255)
+    @Column(name = "artist_name", length = 255)
     private String artistName;
 
     @Column(name = "duration")

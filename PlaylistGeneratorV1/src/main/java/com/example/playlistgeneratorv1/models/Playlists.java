@@ -27,8 +27,8 @@ public class Playlists {
     @Column(name = "average_rank")
     private Integer averageRank;
 
-    @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Tracks> tracks;
+//    @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Tracks> tracks;
    public Playlists() {
 
     }
@@ -74,22 +74,22 @@ public class Playlists {
     }
 
 
-    public void addTrack(Tracks track) {
-        if (tracks == null) {
-            tracks = new ArrayList<>();
-        }
-        tracks.add(track);
-
-
-    }
-
-    public void removeTrack(Tracks track) {
-        if (tracks != null) {
-            tracks.remove(track);
-
-
-        }
-    }
+//    public void addTrack(Tracks track) {
+//        if (tracks == null) {
+//            tracks = new ArrayList<>();
+//        }
+//        tracks.add(track);
+//
+//
+//    }
+//
+//    public void removeTrack(Tracks track) {
+//        if (tracks != null) {
+//            tracks.remove(track);
+//
+//
+//        }
+//    }
 
     @Override
     public boolean equals(Object o) {

@@ -12,7 +12,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository public class AlbumsRepositoryImpl implements AlbumsRepository {
+@Repository
+public class AlbumsRepositoryImpl implements AlbumsRepository {
 
     private final SessionFactory sessionFactory;
 

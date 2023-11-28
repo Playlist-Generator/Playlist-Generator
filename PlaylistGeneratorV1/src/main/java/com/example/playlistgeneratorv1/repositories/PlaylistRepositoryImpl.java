@@ -74,41 +74,41 @@ public class PlaylistRepositoryImpl implements PlaylistRepository {
         }
     }
 
-    @Override
-    public void addTrack(int playlistId, int trackId) {
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            Playlists playlist = session.get(Playlists.class, playlistId);
-            if (playlist == null) {
-                throw new EntityNotFoundException("Playlists", playlistId);
-            }
-
-            Tracks track = session.get(Tracks.class, trackId);
-            if (track == null) {
-                throw new EntityNotFoundException("Tracks", trackId);
-            }
-
-            playlist.addTrack(track);
-            session.getTransaction().commit();
-        }
-    }
-
-    @Override
-    public void removeTrack(int playlistId, int trackId) {
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            Playlists playlist = session.get(Playlists.class, playlistId);
-            if (playlist == null) {
-                throw new EntityNotFoundException("Playlists", playlistId);
-            }
-
-            Tracks track = session.get(Tracks.class, trackId);
-            if (track == null) {
-                throw new EntityNotFoundException("Tracks", trackId);
-            }
-
-            playlist.removeTrack(track);
-            session.getTransaction().commit();
-        }
-    }
+//    @Override
+//    public void addTrack(int playlistId, int trackId) {
+//        try (Session session = sessionFactory.openSession()) {
+//            session.beginTransaction();
+//            Playlists playlist = session.get(Playlists.class, playlistId);
+//            if (playlist == null) {
+//                throw new EntityNotFoundException("Playlists", playlistId);
+//            }
+//
+//            Tracks track = session.get(Tracks.class, trackId);
+//            if (track == null) {
+//                throw new EntityNotFoundException("Tracks", trackId);
+//            }
+//
+//            playlist.addTrack(track);
+//            session.getTransaction().commit();
+//        }
+//    }
+//
+//    @Override
+//    public void removeTrack(int playlistId, int trackId) {
+//        try (Session session = sessionFactory.openSession()) {
+//            session.beginTransaction();
+//            Playlists playlist = session.get(Playlists.class, playlistId);
+//            if (playlist == null) {
+//                throw new EntityNotFoundException("Playlists", playlistId);
+//            }
+//
+//            Tracks track = session.get(Tracks.class, trackId);
+//            if (track == null) {
+//                throw new EntityNotFoundException("Tracks", trackId);
+//            }
+//
+//            playlist.removeTrack(track);
+//            session.getTransaction().commit();
+//        }
+//    }
 }

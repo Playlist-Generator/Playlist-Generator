@@ -13,6 +13,6 @@ public interface PlaylistService {
     void create(PlaylistDto playlistDto, User user);
     void update(int id, PlaylistDto playlistDto);
     void delete(int id);
-    void addTrack(int playlistId, int trackId);
-    void removeTrack(int playlistId, int trackId);
+   /* void addTrack(int playlistId, int trackId);
+    void removeTrack(int playlistId, int trackId);*/
 }

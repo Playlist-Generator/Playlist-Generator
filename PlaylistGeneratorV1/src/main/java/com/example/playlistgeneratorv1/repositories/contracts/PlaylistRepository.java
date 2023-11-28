@@ -8,7 +8,7 @@ import java.util.List;
         void create(Playlists playlist);
         void update(Playlists playlist);
         void delete(int id);
-        void addTrack(int playlistId, int trackId);
-        void removeTrack(int playlistId, int trackId);
+//        void addTrack(int playlistId, int trackId);
+//        void removeTrack(int playlistId, int trackId);
     }
 
