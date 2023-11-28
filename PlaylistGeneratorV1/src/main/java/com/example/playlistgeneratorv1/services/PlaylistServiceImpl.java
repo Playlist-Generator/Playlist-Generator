@@ -5,7 +5,8 @@ import com.example.playlistgeneratorv1.models.Playlists;
 import com.example.playlistgeneratorv1.models.PlaylistDto;
 
 import com.example.playlistgeneratorv1.models.User;
-import com.example.playlistgeneratorv1.repositories.PlaylistRepository;
+import com.example.playlistgeneratorv1.repositories.contracts.PlaylistRepository;
+import com.example.playlistgeneratorv1.services.contracts.PlaylistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +37,6 @@ public class PlaylistServiceImpl implements PlaylistService {
         Playlists playlist = new Playlists();
         playlist.setUser(user);
         playlist.setTitle(playlistDto.getTitle());
-        playlist.setTags(playlistDto.getTags());
 
         playlistRepository.create(playlist);
     }
@@ -46,7 +46,6 @@ public class PlaylistServiceImpl implements PlaylistService {
         Playlists playlist = playlistRepository.get(id);
         if (playlist != null) {
             playlist.setTitle(playlistDto.getTitle());
-            playlist.setTags(playlistDto.getTags());
             playlistRepository.update(playlist);
         } else {
             throw new EntityNotFoundException("Playlists", id);

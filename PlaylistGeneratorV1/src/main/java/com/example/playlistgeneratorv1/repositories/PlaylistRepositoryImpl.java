@@ -2,6 +2,7 @@ package com.example.playlistgeneratorv1.repositories;
 
 import com.example.playlistgeneratorv1.models.Playlists;
 import com.example.playlistgeneratorv1.models.Tracks;
+import com.example.playlistgeneratorv1.repositories.contracts.PlaylistRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

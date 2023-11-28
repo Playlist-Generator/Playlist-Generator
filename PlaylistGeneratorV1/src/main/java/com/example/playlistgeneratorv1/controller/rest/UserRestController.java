@@ -6,7 +6,7 @@ import com.example.playlistgeneratorv1.exceptions.EntityNotFoundException;
 import com.example.playlistgeneratorv1.helpers.AuthenticationHelper;
 import com.example.playlistgeneratorv1.models.RegisterDto;
 import com.example.playlistgeneratorv1.models.User;
-import com.example.playlistgeneratorv1.services.UserService;
+import com.example.playlistgeneratorv1.services.contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.example.playlistgeneratorv1.services;
+package com.example.playlistgeneratorv1.services.contracts;
 
 import com.example.playlistgeneratorv1.models.Tracks;
 import com.example.playlistgeneratorv1.models.User;

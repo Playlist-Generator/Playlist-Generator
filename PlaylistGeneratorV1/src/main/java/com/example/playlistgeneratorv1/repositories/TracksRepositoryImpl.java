@@ -1,6 +1,7 @@
 package com.example.playlistgeneratorv1.repositories;
 
 import com.example.playlistgeneratorv1.models.Tracks;
+import com.example.playlistgeneratorv1.repositories.contracts.TracksRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,7 +91,7 @@ public class TracksRepositoryImpl implements TracksRepository {
             if (track == null) {
                 throw new EntityNotFoundException("Track", id);
             }
-            session.delete(track);
+            session.remove(track);
             session.getTransaction().commit();
         }
     }

@@ -6,8 +6,8 @@ import com.example.playlistgeneratorv1.exceptions.EntityDuplicateException;
 import com.example.playlistgeneratorv1.exceptions.EntityNotFoundException;
 import com.example.playlistgeneratorv1.models.Tracks;
 import com.example.playlistgeneratorv1.models.User;
-import com.example.playlistgeneratorv1.repositories.TracksRepository;
-import com.example.playlistgeneratorv1.repositories.UserRepository;
+import com.example.playlistgeneratorv1.repositories.contracts.TracksRepository;
+import com.example.playlistgeneratorv1.services.contracts.TrackServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
