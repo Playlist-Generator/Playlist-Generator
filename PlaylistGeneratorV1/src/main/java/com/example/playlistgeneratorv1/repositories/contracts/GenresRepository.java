@@ -13,5 +13,5 @@ public interface GenresRepository {
     Genres get(int id);
 
 
-
+    void save(Genres genre);
 }

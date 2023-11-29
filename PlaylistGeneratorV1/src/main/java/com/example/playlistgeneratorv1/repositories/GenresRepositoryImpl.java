@@ -7,7 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.hibernate.query.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class GenresRepositoryImpl implements GenresRepository {
     @Override
     public List<Genres> getAllGenres() {
         try (Session session = sessionFactory.openSession()) {
-            Query<Genres> query = session.createQuery("from Genres", Genres.class);
+            org.hibernate.query.Query<Genres> query = session.createQuery("from Genres", Genres.class);
             return query.list();
         }
     }
@@ -40,5 +40,11 @@ public class GenresRepositoryImpl implements GenresRepository {
         }
     }
 
-
+    @Override
+    @Transactional
+    public void save(Genres genre) {
+        try (Session session = sessionFactory.openSession()) {
+            session.save(genre);
+        }
+    }
 }
