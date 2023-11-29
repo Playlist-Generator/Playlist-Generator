@@ -1,0 +1,60 @@
+CREATE TABLE users (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  username VARCHAR(255),
+  password VARCHAR(255),
+  email VARCHAR(255),
+  is_admin BOOLEAN
+);
+
+CREATE TABLE genres (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  genre VARCHAR(255)
+);
+
+CREATE TABLE artists (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(255),
+  track_list VARCHAR(255)
+);
+
+CREATE TABLE albums (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  title VARCHAR(255),
+  tracklist_url VARCHAR(255),
+  genres_id INT,
+  FOREIGN KEY (genres_id) REFERENCES genres(id)
+);
+
+CREATE TABLE playlists (
+  id INT PRIMARY KEY,
+  user_id INT,
+  title VARCHAR(255),
+  tags VARCHAR(255),
+  total_playtime INT,
+  average_rank INT,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE tracks (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  album_id INT,
+  genre_id INT,
+  artist_id INT,
+  title VARCHAR(255),
+  link VARCHAR(255),
+  artist_name VARCHAR(255),
+  duration BIGINT,
+  ranks INT,
+  preview_url VARCHAR(255),
+  FOREIGN KEY (album_id) REFERENCES albums(id),
+  FOREIGN KEY (genre_id) REFERENCES genres(id),
+  FOREIGN KEY (artist_id) REFERENCES artists(id)
+);
+
+CREATE TABLE track_playlist (
+  track_id INT,
+  playlist_id INT,
+  FOREIGN KEY (track_id) REFERENCES tracks(id),
+  FOREIGN KEY (playlist_id) REFERENCES playlists(id),
+  PRIMARY KEY (track_id, playlist_id)
+);

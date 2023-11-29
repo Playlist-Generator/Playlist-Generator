@@ -37,7 +37,7 @@ CREATE TABLE albums (
 
                         title VARCHAR(255),
 
-                        tracklist_url VARCHAR(255)
+                        tracklist_url VARCHAR(255),
 
                         genres_id int
 

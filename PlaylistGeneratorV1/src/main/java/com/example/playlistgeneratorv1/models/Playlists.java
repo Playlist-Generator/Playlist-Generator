@@ -21,6 +21,9 @@ public class Playlists {
     @Column(name = "title", length = 255)
     private String title;
 
+    @Column(name = "tags", length = 255)
+    private String tags;
+
     @Column(name = "total_playtime")
     private Integer totalPlaytime;
 
@@ -31,6 +34,22 @@ public class Playlists {
 //    private List<Tracks> tracks;
    public Playlists() {
 
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    public void setTotalPlaytime(Integer totalPlaytime) {
+        this.totalPlaytime = totalPlaytime;
+    }
+
+    public void setAverageRank(Integer averageRank) {
+        this.averageRank = averageRank;
     }
 
     public int getPlaylistId() {

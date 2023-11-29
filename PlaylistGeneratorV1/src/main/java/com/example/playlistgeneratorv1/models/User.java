@@ -11,17 +11,17 @@ public class User {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "username")
+    @Column(name = "username", nullable = false)
     private String username;
 
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "is_admin")
+    @Column(name = "is_admin", nullable = false)
     private boolean isAdmin;
 
     public User() {
