@@ -47,7 +47,7 @@ public class PlaylistRepositoryImpl implements PlaylistRepository {
     public void create(Playlists playlist) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.persist(playlist);
+            session.save(playlist);
             session.getTransaction().commit();
         }
     }

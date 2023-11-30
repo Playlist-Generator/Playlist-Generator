@@ -57,7 +57,7 @@ public class GenresRepositoryImpl implements GenresRepository {
     public Genres findByName(String name) {
         try (Session session = sessionFactory.openSession()) {
             Query<Genres> query = session.createQuery("from Genres where genre = :genre", Genres.class);
-            query.setParameter("name", name);
+            query.setParameter("genre", name);
             return query.uniqueResult();
         }
     }
@@ -74,7 +74,7 @@ public class GenresRepositoryImpl implements GenresRepository {
     public void create(Genres genre) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.persist(genre);
+            session.save(genre);
             session.getTransaction().commit();
         }
     }

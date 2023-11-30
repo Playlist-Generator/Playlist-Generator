@@ -59,7 +59,7 @@ public class ArtistsRepositoryImpl implements ArtistsRepository {
     public void create(Artists artist) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.persist(artist);
+            session.save(artist);
             session.getTransaction().commit();
         }
     }

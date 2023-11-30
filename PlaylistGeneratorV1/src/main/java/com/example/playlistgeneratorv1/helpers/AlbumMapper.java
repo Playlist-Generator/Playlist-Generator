@@ -21,7 +21,7 @@ public class AlbumMapper {
         this.genresService = genresService;
     }
 
-    public Albums fromDto(int id, AlbumDto dto) {
+    public Albums fromDto(long id, AlbumDto dto) {
         Albums albums = fromDto(dto);
         albums.setId(id);
         Albums repositoryAlbums = albumsService.get(id);

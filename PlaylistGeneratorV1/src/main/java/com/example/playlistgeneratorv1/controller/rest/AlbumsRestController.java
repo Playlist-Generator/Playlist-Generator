@@ -81,7 +81,7 @@ public class AlbumsRestController {
     }
 
     @PutMapping("/{id}")
-    public void updateAlbum(@PathVariable int id, @RequestBody AlbumDto albumDto) {
+    public void updateAlbum(@PathVariable long id, @RequestBody AlbumDto albumDto) {
         Albums album = albumMapper.fromDto(id, albumDto);
         album.setId(id);
         try {

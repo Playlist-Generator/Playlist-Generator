@@ -3,6 +3,7 @@ package com.example.playlistgeneratorv1.services;
 
 import com.example.playlistgeneratorv1.exceptions.AuthorizationException;
 import com.example.playlistgeneratorv1.exceptions.EntityDuplicateException;
+import com.example.playlistgeneratorv1.exceptions.EntityLongNotFoundException;
 import com.example.playlistgeneratorv1.exceptions.EntityNotFoundException;
 import com.example.playlistgeneratorv1.models.Tracks;
 import com.example.playlistgeneratorv1.models.User;
@@ -67,7 +68,7 @@ public class TrackServicesImpl implements TrackServices {
         try {
             tracksRepository.update(tracks);
         } catch (EntityNotFoundException e) {
-            throw new EntityNotFoundException("Track", tracks.getId());
+            throw new EntityLongNotFoundException("Track", tracks.getId());
         }
     }
 

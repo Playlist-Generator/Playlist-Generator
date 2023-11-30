@@ -10,7 +10,7 @@ public class Tracks {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "album_id")
@@ -34,7 +34,7 @@ public class Tracks {
     private String artistName;
 
     @Column(name = "duration")
-    private long duration;
+    private Integer duration;
 
     @Column(name = "ranks")
     private int ranks;
@@ -45,11 +45,11 @@ public class Tracks {
 
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -101,11 +101,11 @@ public class Tracks {
         this.artistName = artistName;
     }
 
-    public Long getDuration() {
+    public Integer getDuration() {
         return duration;
     }
 
-    public void setDuration(Long duration) {
+    public void setDuration(Integer duration) {
         this.duration = duration;
     }
 

@@ -2,9 +2,7 @@ package com.example.playlistgeneratorv1.models;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "Playlists")
@@ -29,6 +27,14 @@ public class Playlists {
 
     @Column(name = "average_rank")
     private Integer averageRank;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "track_playlist",
+            joinColumns = {@JoinColumn(name = "playlist_id")},
+            inverseJoinColumns = {@JoinColumn(name = "track_id")}
+    )
+    private Set<Tracks> tracks;
 
 //    @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL, orphanRemoval = true)
 //    private List<Tracks> tracks;
@@ -92,6 +98,16 @@ public class Playlists {
         this.averageRank = averageRank;
     }
 
+
+    public Set<Tracks> getTracks() {
+        return tracks;
+    }
+    public void setTracks(Set<Tracks> tracks) {
+        if (this.tracks == null || this.tracks.isEmpty()) {
+            this.tracks = new HashSet<>();
+        }
+        this.tracks.addAll(tracks);
+    }
 
 //    public void addTrack(Tracks track) {
 //        if (tracks == null) {

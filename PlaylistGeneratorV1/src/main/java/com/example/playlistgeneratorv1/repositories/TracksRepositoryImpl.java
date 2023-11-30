@@ -76,7 +76,7 @@ public class TracksRepositoryImpl implements TracksRepository {
     public void create(Tracks track) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.persist(track);
+            session.save(track);
             session.getTransaction().commit();
         }
     }

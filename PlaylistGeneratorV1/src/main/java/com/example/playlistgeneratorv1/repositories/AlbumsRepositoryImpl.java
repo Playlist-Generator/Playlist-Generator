@@ -1,6 +1,7 @@
 package com.example.playlistgeneratorv1.repositories;
 
 
+import com.example.playlistgeneratorv1.exceptions.EntityLongNotFoundException;
 import com.example.playlistgeneratorv1.exceptions.EntityNotFoundException;
 import com.example.playlistgeneratorv1.models.Albums;
 import com.example.playlistgeneratorv1.repositories.contracts.AlbumsRepository;
@@ -31,11 +32,11 @@ public class AlbumsRepositoryImpl implements AlbumsRepository {
     }
 
     @Override
-    public Albums get(int id) {
+    public Albums get(long id) {
         try (Session session = sessionFactory.openSession()) {
             Albums album = session.get(Albums.class, id);
             if (album == null) {
-                throw new EntityNotFoundException("Albums", id);
+                throw new EntityLongNotFoundException("Albums", id);
             }
             return album;
         }
@@ -74,7 +75,7 @@ public class AlbumsRepositoryImpl implements AlbumsRepository {
     public void create(Albums album) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.persist(album);
+            session.save(album);
             session.getTransaction().commit();
         }
     }

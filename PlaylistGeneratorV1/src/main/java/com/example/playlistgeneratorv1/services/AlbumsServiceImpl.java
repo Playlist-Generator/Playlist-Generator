@@ -2,6 +2,7 @@ package com.example.playlistgeneratorv1.services;
 
 import com.example.playlistgeneratorv1.exceptions.AuthorizationException;
 import com.example.playlistgeneratorv1.exceptions.EntityDuplicateException;
+import com.example.playlistgeneratorv1.exceptions.EntityLongNotFoundException;
 import com.example.playlistgeneratorv1.exceptions.EntityNotFoundException;
 import com.example.playlistgeneratorv1.models.Albums;
 import com.example.playlistgeneratorv1.models.User;
@@ -30,7 +31,7 @@ public class AlbumsServiceImpl implements AlbumsService {
     }
 
     @Override
-    public Albums get(int id) {
+    public Albums get(long id) {
         return albumsRepository.get(id);
     }
 
@@ -63,7 +64,7 @@ public class AlbumsServiceImpl implements AlbumsService {
         try {
             albumsRepository.update(album);
         } catch (EntityNotFoundException e) {
-            throw new EntityNotFoundException("Album", album.getId());
+            throw new EntityLongNotFoundException("Album", album.getId());
         }
     }
 

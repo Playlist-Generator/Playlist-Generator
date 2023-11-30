@@ -8,7 +8,7 @@ import java.util.List;
 public interface AlbumsService {
     List<Albums> get();
 
-    Albums get(int id);
+    Albums get(long id);
 
     Albums get(String title);
 

@@ -15,7 +15,7 @@ public class AlbumDto {
     private String trackList;
 
     @Positive(message = "genresId should be positive")
-    private int genresId;
+    private long genresId;
 
     public AlbumDto() {
     }
@@ -36,11 +36,11 @@ public class AlbumDto {
         this.trackList = trackList;
     }
 
-    public int getGenresId() {
+    public long getGenresId() {
         return genresId;
     }
 
-    public void setGenresId(int genresId) {
+    public void setGenresId(long genresId) {
         this.genresId = genresId;
     }
 }

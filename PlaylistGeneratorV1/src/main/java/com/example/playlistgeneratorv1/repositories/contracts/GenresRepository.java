@@ -12,6 +12,9 @@ public interface GenresRepository {
 
     Genres get(int id);
 
+    Genres get(long id);
+
+    Genres findByName(String name);
 
     void save(Genres genre);
 

@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public class GenresServiceImpl implements GenresService {
 
-    private static final String DEEZER_GENRE_API = "https://api.deezer.com/genre";
+//    private static final String DEEZER_GENRE_API = "https://api.deezer.com/genre";
     private final GenresRepository genresRepository;
 
     @Autowired
@@ -36,7 +36,7 @@ public class GenresServiceImpl implements GenresService {
         return genresRepository.get(id);
     }
 
-    @PostConstruct
+   /* @PostConstruct
     public void updateGenres() {
         RestTemplate restTemplate = new RestTemplate();
         Genres[] genres = restTemplate.getForObject(DEEZER_GENRE_API, Genres[].class);
@@ -53,5 +53,5 @@ public class GenresServiceImpl implements GenresService {
                 genresRepository.save(genre);
             }
         }
-    }
+    }*/
 }
