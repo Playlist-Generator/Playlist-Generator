@@ -9,4 +9,6 @@ public interface GenresService {
     List<Genres> getAllGenres();
     Genres get(int id);
 
+    Genres get(long id);
+
 }

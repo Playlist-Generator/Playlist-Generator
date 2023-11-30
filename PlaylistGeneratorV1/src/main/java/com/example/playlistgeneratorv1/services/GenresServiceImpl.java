@@ -31,6 +31,11 @@ public class GenresServiceImpl implements GenresService {
         return genresRepository.get(id);
     }
 
+    @Override
+    public Genres get(long id) {
+        return genresRepository.get(id);
+    }
+
     @PostConstruct
     public void updateGenres() {
         RestTemplate restTemplate = new RestTemplate();
