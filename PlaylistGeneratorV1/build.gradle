@@ -27,7 +27,7 @@ dependencies {
     implementation 'org.springframework.security:spring-security-crypto'
     implementation 'org.jetbrains:annotations:24.0.0'
     implementation 'org.jetbrains:annotations:24.0.0'
-
+    implementation 'com.google.maps:google-maps-services:+'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 }

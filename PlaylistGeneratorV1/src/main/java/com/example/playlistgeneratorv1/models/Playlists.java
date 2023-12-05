@@ -35,6 +35,8 @@ public class Playlists {
             inverseJoinColumns = {@JoinColumn(name = "track_id")}
     )
     private Set<Tracks> tracks;
+    @Transient
+    private int mapDuration;
 
 //    @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL, orphanRemoval = true)
 //    private List<Tracks> tracks;
@@ -98,6 +100,13 @@ public class Playlists {
         this.averageRank = averageRank;
     }
 
+    public int getMapDuration() {
+        return mapDuration;
+    }
+
+    public void setMapDuration(int mapDuration) {
+        this.mapDuration = mapDuration;
+    }
 
     public Set<Tracks> getTracks() {
         return tracks;

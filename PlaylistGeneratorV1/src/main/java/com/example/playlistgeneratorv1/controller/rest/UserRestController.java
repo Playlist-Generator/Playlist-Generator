@@ -55,15 +55,7 @@ public class UserRestController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
-    @PostMapping
-    public ResponseEntity<User> create(@RequestBody RegisterDto registerDto) {
-        try {
-            User newUser = service.create(registerDto);
-            return new ResponseEntity<>(newUser, HttpStatus.CREATED);
-        } catch (AuthorizationException e) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
-        }
-    }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<User> update(@PathVariable int id, @RequestBody User updatedUser, @RequestHeader HttpHeaders headers) {

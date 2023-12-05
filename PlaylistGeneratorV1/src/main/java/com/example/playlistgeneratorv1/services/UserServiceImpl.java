@@ -1,5 +1,7 @@
 package com.example.playlistgeneratorv1.services;
 import com.example.playlistgeneratorv1.exceptions.AuthorizationException;
+import com.example.playlistgeneratorv1.exceptions.EntityDuplicateException;
+import com.example.playlistgeneratorv1.exceptions.EntityNotFoundException;
 import com.example.playlistgeneratorv1.helpers.UserMapper;
 import com.example.playlistgeneratorv1.models.RegisterDto;
 import com.example.playlistgeneratorv1.models.User;
@@ -35,14 +37,24 @@ public class UserServiceImpl implements UserService {
         return repository.get(username);
     }
 
-
-
     @Override
-    public User create(RegisterDto registerDto) {
-        User newUser = UserMapper.fromDto(registerDto);
-        repository.create(newUser);
-        return newUser;
+    public void create(User user) {
+        boolean duplicateExists = true;
+        try {
+            repository.get(user.getUsername());
+
+        } catch (EntityNotFoundException e) {
+            duplicateExists = false;
+        }
+
+        if (duplicateExists) {
+            throw new EntityDuplicateException("User", "username", user.getUsername());
+        }
+
+        repository.create(user);
     }
+
+
 
     @Override
     public void update(int id, User user) {
