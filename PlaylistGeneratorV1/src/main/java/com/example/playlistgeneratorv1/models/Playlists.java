@@ -18,10 +18,6 @@ public class Playlists {
 
     @Column(name = "title", length = 255)
     private String title;
-
-    @Column(name = "tags", length = 255)
-    private String tags;
-
     @Column(name = "total_playtime")
     private Integer totalPlaytime;
 
@@ -35,6 +31,14 @@ public class Playlists {
             inverseJoinColumns = {@JoinColumn(name = "track_id")}
     )
     private Set<Tracks> tracks;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "playlists_genres",
+            joinColumns = @JoinColumn(name = "playlist_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id")
+    )
+    private Set<Genres> genres = new HashSet<>();
     @Transient
     private int mapDuration;
 
@@ -42,14 +46,6 @@ public class Playlists {
 //    private List<Tracks> tracks;
    public Playlists() {
 
-    }
-
-    public String getTags() {
-        return tags;
-    }
-
-    public void setTags(String tags) {
-        this.tags = tags;
     }
 
     public void setTotalPlaytime(Integer totalPlaytime) {

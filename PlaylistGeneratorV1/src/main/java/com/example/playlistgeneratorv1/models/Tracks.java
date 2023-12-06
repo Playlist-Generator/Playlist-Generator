@@ -27,12 +27,6 @@ public class Tracks {
     @Column(name = "title", length = 255)
     private String title;
 
-    @Column(name = "link", length = 255)
-    private String link;
-
-    @Column(name = "artist_name", length = 255)
-    private String artistName;
-
     @Column(name = "duration")
     private Integer duration;
 
@@ -83,22 +77,6 @@ public class Tracks {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
-    public String getArtistName() {
-        return artistName;
-    }
-
-    public void setArtistName(String artistName) {
-        this.artistName = artistName;
     }
 
     public Integer getDuration() {

@@ -14,7 +14,7 @@ public class Artists {
     @Column(name = "name", length = 255)
     private String name;
 
-    @Column(name = "track_list", length = 255)
+    @Column(name = "track_list")
     private String trackList;
 
     public Artists() {
