@@ -30,9 +30,12 @@ public class PlaylistServiceImpl implements PlaylistService {
     }
 
     @Override
-    public Playlists get(int id) {
-        return playlistRepository.get(id);
-    }
+    public Playlists get(int id)    {
+        if(playlistRepository.get(id)==null){
+        throw new EntityNotFoundException("Playlist", id);
+    }else
+            return playlistRepository.get(id);
+}
 
     @Override
     public void create(PlaylistDto playlistDto, User user) {
