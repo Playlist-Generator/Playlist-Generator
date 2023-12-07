@@ -56,6 +56,8 @@ public class AlbumsRepositoryImpl implements AlbumsRepository {
         }
     }
 
+
+
     @Override
     public List<Albums> getByGenre(String genre) {
         try (Session session = sessionFactory.openSession()) {

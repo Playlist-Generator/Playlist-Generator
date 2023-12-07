@@ -34,7 +34,7 @@ public class AuthenticationMvcController {
     public AuthenticationMvcController(UserService userService,
                                        AuthenticationHelper authenticationHelper,
                                        UserMapper userMapper
-                                     ) {
+    ) {
         this.userService = userService;
         this.authenticationHelper = authenticationHelper;
         this.userMapper = userMapper;

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/home")
 public class HomeMvcController {
 
     @ModelAttribute("isAuthenticated")
@@ -21,7 +21,7 @@ public class HomeMvcController {
         return "HomeView";
     }
 
-    @GetMapping("/playlist")
+    @GetMapping("playlist")
     public String showPlayListPage() {
         return "PlayList";
     }

@@ -1,3 +1,4 @@
+
 package com.example.playlistgeneratorv1.controller.rest;
 
 import com.example.playlistgeneratorv1.services.TravelTimeService;
@@ -11,8 +12,14 @@ import java.sql.Time;
 @RestController
 public class TravelTimeController {
 
+
+    private final TravelTimeService travelTimeService;
+
+
     @Autowired
-    private TravelTimeService travelTimeService;
+    public TravelTimeController(TravelTimeService travelTimeService) {
+        this.travelTimeService = travelTimeService;
+    }
 
     @GetMapping("/travel-time")
     public Time getTravelTime(@RequestParam String origin, @RequestParam String destination) {

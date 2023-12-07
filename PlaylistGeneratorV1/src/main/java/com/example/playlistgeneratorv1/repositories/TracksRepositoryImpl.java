@@ -1,6 +1,6 @@
 package com.example.playlistgeneratorv1.repositories;
 
-import com.example.playlistgeneratorv1.models.Albums;
+import com.example.playlistgeneratorv1.exceptions.EntityLongNotFoundException;
 import com.example.playlistgeneratorv1.models.Tracks;
 import com.example.playlistgeneratorv1.repositories.contracts.TracksRepository;
 import org.hibernate.Session;
@@ -11,6 +11,7 @@ import org.hibernate.query.Query;
 import com.example.playlistgeneratorv1.exceptions.EntityNotFoundException;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class TracksRepositoryImpl implements TracksRepository {
@@ -38,6 +39,17 @@ public class TracksRepositoryImpl implements TracksRepository {
                 throw new EntityNotFoundException("Tracks", id);
             }
             return track;
+        }
+    }
+
+    @Override
+    public Tracks get(long id) {
+        try (Session session = sessionFactory.openSession()) {
+            Tracks tracks = session.get(Tracks.class, id);
+            if (tracks == null) {
+                throw new EntityLongNotFoundException("Tracks", id);
+            }
+            return tracks;
         }
     }
 
@@ -102,4 +114,65 @@ public class TracksRepositoryImpl implements TracksRepository {
             session.getTransaction().commit();
         }
     }
+
+    @Override
+    public double findAveragePlayTimeForGenre(String genre) {
+        try (var session = sessionFactory.openSession()) {
+            Query<Double> query = session.createQuery("SELECT AVG(t.duration) FROM Tracks t " +
+                    "JOIN t.genre g WHERE g.genre = :genre", Double.class);
+            query.setParameter("genre", genre);
+            return query.getSingleResult();
+        }
+    }
+
+    @Override
+    public Set<Tracks> findTrackByGenreAndDistinctArtist(String genre, int limit) {
+        try (var session = sessionFactory.openSession()) {
+            Query<Tracks> query = session.createQuery("SELECT t FROM Tracks t " +
+                    "JOIN t.genre g WHERE g.genre = :genre " +
+                    "GROUP BY t.artist.id ORDER BY RANDOM()", Tracks.class);
+            query.setParameter("genre", genre);
+            query.setMaxResults(limit);
+            return Set.copyOf(query.getResultList());
+        }
+    }
+
+    @Override
+    public Set<Tracks> findTopTrackByGenreAndDistinctArtist(String genre, int limit) {
+        try (var session = sessionFactory.openSession()) {
+            Query<Tracks> query = session.createQuery("SELECT t FROM Tracks t " +
+                    "JOIN t.genre g WHERE g.genre = :genre " +
+                    "GROUP BY t.artist.id ORDER BY t.ranks DESC", Tracks.class);
+            query.setParameter("genre", genre);
+            query.setMaxResults(limit);
+            return Set.copyOf(query.getResultList());
+        }
+    }
+
+    @Override
+    public Set<Tracks> findTrackByGenre(String genre, int limit) {
+        try (var session = sessionFactory.openSession()) {
+            Query<Tracks> query = session.createQuery("SELECT t FROM Tracks t " +
+                    "JOIN t.genre g WHERE g.genre = :genre " +
+                    "ORDER BY RANDOM()", Tracks.class);
+            query.setParameter("genre", genre);
+            query.setMaxResults(limit);
+            return Set.copyOf(query.getResultList());
+        }
+    }
+
+    @Override
+    public Set<Tracks> findTopTrackByGenre(String genre, int limit) {
+        try (var session = sessionFactory.openSession()) {
+            Query<Tracks> query = session.createQuery(
+                    "SELECT t FROM Tracks t " +
+                            "JOIN t.genre g WHERE g.genre = :genre " +
+                            "ORDER BY t.ranks DESC", Tracks.class);
+            query.setParameter("genre", genre);
+            query.setMaxResults(limit);
+            return Set.copyOf(query.getResultList());
+        }
+    }
+
+
 }
