@@ -3,12 +3,14 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
+    background: url('https://cdn.media.amplience.net/i/metallica/2023-11nov03_social?fmt=auto&maxW=1160') center center fixed;
+    background-size: cover;
 }
 
 .body-content {
     max-width: 400px;
     margin: 0 auto;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.9);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

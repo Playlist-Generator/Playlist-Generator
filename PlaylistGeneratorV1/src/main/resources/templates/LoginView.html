@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<form th:replace="~{PostForm.html :: head('Login')}"></form>
-<head> <link href="../../../../../../Playlist-Generator/PlaylistGeneratorV1/src/main/resources/static/css/login.css" th:href="@{/css/login.css}" rel="stylesheet"/></head>
+<head>
+    <link href="../static/css/login.css" th:href="@{/css/login.css}" rel="stylesheet"/>
+</head>
 <body>
-<form th:replace="~{HomeView.html :: header}"></form>
-
 <div class="body-content">
     <h2>Login</h2>
-    <form action="#" th:action="@{/auth/login}" th:object="${login}" method="post">
+    <form action="@{/auth/login}" method="post" th:object="${login}">
         <label th:text="#{user.label.username}">Username</label>
         <br/>
         <input type="text" th:field="*{username}"/>
@@ -21,9 +20,8 @@
         <br/><br/>
 
         <input type="submit" value="Login"/>
+        <a th:href="@{/}" class="back-button">Back</a>
     </form>
 </div>
-
-
 </body>
 </html>

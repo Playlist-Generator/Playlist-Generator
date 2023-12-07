@@ -1,30 +1,129 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<form th:replace="~{PostForm.html :: head('Home')}"></form>
- <link href="../../../../.c/css/home.css" th:href="@{/css/home.css}" rel="stylesheet"/></head>
-<header th:fragment="header">
+<html>
 
+<head>
 
-    <div>
-        <h3>
-            <a href="#" th:href="@{/}" th:text="#{navigation.home} + ' | '">Home</a>
-            <a href="#" th:href="@{/playlist}" th:text="#{navigation.playlist} + ' | '">Playlist</a>
-            <a href="#" th:unless="${isAuthenticated}" th:href="@{/auth/login}">Login | </a>
-            <a href="#" th:unless="${isAuthenticated}" th:href="@{/auth/register}">Register</a>
-            <a href="#" th:if="${isAuthenticated}" th:href="@{/auth/logout}">Logout</a>
-        </h3>
-    </div>
-</header>
+    <title th:text="${pageTitle}">Default Title</title>
+    <link rel="stylesheet" type="text/css" href="fonts/style.css">
+    <link href="../static/css/home.css" th:href="@{/css/home.css}" rel="stylesheet"/>
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta name="x-apple-disable-message-reformatting">
+    <meta name="viewport" content="width=device-width, initial-scale=0.86, maximum-scale=3.0, minimum-scale=0.86">
+
+</head>
+
 <body>
 
+<header class="side-header">
 
-<div class="body-content">
-    <h2 th:text="#{home.welcome}">Welcome to Playlist generation!</h2>
-    <h2 th:text="${session.currentUser}" th:if="${isAuthenticated}"></h2>
-    <img src="../../../../../../Playlist-Generator/PlaylistGeneratorV1/src/main/resources/static/images/user.png" th:src="@{/images/user.png}" alt="Forum logo"/>
+    <a href="#">
+        <div class="logo">
+            <img src="https://static1.squarespace.com/static/58da61243a0411e118c534d9/5ab7ed2e88251b198c3e5d48/5ab7ed2e03ce64c499d195db/1522003251202/Bear.png?format=500w">
+        </div>
+    </a>
 
-</div>
+    <nav class="navbar-side">
 
-<form th:replace="~{PostForm.html :: footer}"></form>
+        <ul>
+
+            <li class="active"><a href="index.html">
+                <div class="svg-space"></div> <a href="#" th:href="@{/home}" th:text="#{navigation.home} + ' | '">Home</a></a>
+            </li>
+            <li><a href="about.html">
+                <div class="svg-space"></div>   <a href="#" th:href="@{/playlist}" >Playlist</a> </a>
+            </li>
+            <li><a href="labs.html">
+                <div class="svg-space"></div> <a href="#" th:href="@{/playlistgen}" >Playlist generator</a> </a>
+            </li>
+            <li><a href="labs.html">
+                <div class="svg-space"></div> <a href="#" th:href="@{/api/users}" >Users</a> </a>
+            </li>
+
+            <li class="bottom"><a href="#">
+                <div class="svg-space"></div><a href="#" th:if="${isAuthenticated}" th:href="@{/auth/logout}">Logout</a></a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+</header>
+
+<main class="main-wrapper">
+
+
+        <div class="page-title">
+           Top 9 Tracks
+        </div>
+    <br>
+    <br>
+
+
+
+
+
+    </header>
+
+    <section class="works smooth-in">
+
+        <div class="work">
+            <img src="https://assets.awwwards.com/awards/media/cache/thumb_417_299/submissions/2018/02/5a969beeb9177.jpg">
+        </div>
+        <div class="work">
+            <img src="https://assets.awwwards.com/awards/media/cache/thumb_417_299/submissions/2018/02/5a857d11241e4.jpg">
+        </div>
+        <div class="work">
+            <img src="https://assets.awwwards.com/awards/media/cache/thumb_417_299/submissions/2018/02/5a756c783b52e.png">
+        </div>
+        <div class="work">
+            <img src="https://assets.awwwards.com/awards/media/cache/thumb_417_299/submissions/2018/01/5a58f2a7b7806.jpg">
+        </div>
+        <div class="work">
+            <img src="https://assets.awwwards.com/awards/media/cache/thumb_417_299/submissions/2017/12/5a393a545ed9a.jpg">
+        </div>
+        <div class="work">
+            <img src="https://assets.awwwards.com/awards/media/cache/thumb_417_299/submissions/2017/10/59e7aafe919c9.png">
+        </div>
+        <div class="work">
+            <img src="https://assets.awwwards.com/awards/media/cache/thumb_417_299/submissions/2017/10/59e928bcddb50.png">
+        </div>
+        <div class="work">
+            <img src="https://assets.awwwards.com/awards/media/cache/thumb_417_299/submissions/2017/10/59e0ec1f8f000.jpg">
+        </div>
+        <div class="work">
+            <img src="https://assets.awwwards.com/awards/media/cache/thumb_417_299/submissions/2017/10/59e036c197ac6.png">
+        </div>
+
+    </section>
+
+<!--    <footer>-->
+
+<!--        <nav class="footer-nav">-->
+<!--            <ul>-->
+<!--                <li>-->
+<!--                    <a href="#"><i class="fab fa-facebook-square"></i></a>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <a href="#"><i class="fab fa-dribbble-square"></i></a>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <a href="#"><i class="fab fa-codepen"></i></a>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <a href="#"><i class="fab fa-github-square"></i></a>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <a href="#">colourjim@gmail.com</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </nav>-->
+
+<!--    </footer>-->
+
+</main>
+
 </body>
+
 </html>

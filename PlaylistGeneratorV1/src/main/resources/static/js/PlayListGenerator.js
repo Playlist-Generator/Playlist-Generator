@@ -27,7 +27,7 @@ function calcRoute() {
     var request = {
         origin: document.getElementById("from").value,
         destination: document.getElementById("to").value,
-        travelMode: google.maps.TravelMode.DRIVING, //WALKING, BYCYCLING, TRANSIT
+        travelMode: google.maps.TravelMode.DRIVING,
         unitSystem: google.maps.UnitSystem.METRIC
     }
 
@@ -41,6 +41,33 @@ function calcRoute() {
 
             //display route
             directionsDisplay.setDirections(result);
+
+            function sendDurationToBackend(durationText) {
+                // Използвайте AJAX, за да изпратите продължителността към backend
+                var xhr = new XMLHttpRequest();
+                var url = '/your-backend-endpoint'; // Заменете с реалния вашия backend endpoint
+
+                xhr.open('POST', url, true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        // Обработете отговора от backend, ако е необходимо
+                        console.log('Продължителност изпратена успешно към backend.');
+                    }
+                };
+
+                // Преобразувайте durationText в JSON формат
+                var data = JSON.stringify({ duration: durationText });
+
+                // Изпратете заявката
+                xhr.send(data);
+            }
+
+
+
+
+
         } else {
             //delete route from map
             directionsDisplay.setDirections({ routes: [] });
@@ -51,25 +78,7 @@ function calcRoute() {
             output.innerHTML = "<div class='alert-danger'><i class='fas fa-exclamation-triangle'></i> Could not retrieve driving distance.</div>";
         }
     });
-    function sendDurationToBackend(durationInSeconds) {
-        // Тук трябва да направите AJAX заявка (например с помощта на jQuery) към вашето RESTful API, където ще изпратите durationInSeconds на бекенда.
 
-        // Пример с jQuery:
-        $.ajax({
-            url: '/api/createPlaylist',
-            method: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({ duration: durationInSeconds }),
-            success: function (response) {
-                // Обработка на успешния отговор от бекенда
-                console.log(response);
-            },
-            error: function (error) {
-                // Обработка на грешки
-                console.error(error);
-            }
-        });
-    }
 }
 
 

@@ -2,18 +2,21 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
+    background: url('https://images.summitmedia-digital.com/spotph/images/2023/03/31/ticket-selling-1200-1680256735.jpg') center center fixed;
+    background-size: cover;
 }
 
 .body-content {
     max-width: 600px;
     margin: 20px auto;
     padding: 20px;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.9);
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative; /* Add this line */
+    z-index: 1; /* Add this line */
 }
 
 label {
