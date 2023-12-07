@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<a href="#" th:if="${isAuthenticated}">
+<!DOCTYPE html >
 <html>
 
 <head>
@@ -18,27 +19,30 @@
 
 <header class="side-header">
 
-    <a href="#">
-        <div class="logo">
+    <a href="#" th:if="${isAuthenticated}">
+    <div class="logo">
             <img src="https://static1.squarespace.com/static/58da61243a0411e118c534d9/5ab7ed2e88251b198c3e5d48/5ab7ed2e03ce64c499d195db/1522003251202/Bear.png?format=500w">
         </div>
     </a>
 
     <nav class="navbar-side">
+        <h3 th:text="#{welcome.user}">Welcome (design)!</h3>
+        <h3 th:text="${session.currentUser}" th:if="${isAuthenticated}"></h3>
+<br>
 
         <ul>
 
             <li class="active"><a href="index.html">
-                <div class="svg-space"></div> <a href="#" th:href="@{/home}" th:text="#{navigation.home} + ' | '">Home</a></a>
+                <div class="svg-space"></div>    <a href="#" th:if="${isAuthenticated}" th:href="@{/home}">Home </a></a>
             </li>
             <li><a href="about.html">
-                <div class="svg-space"></div>   <a href="#" th:href="@{/playlist}" >Playlist</a> </a>
+                <div class="svg-space"></div>  <a href="#" th:if="${isAuthenticated}" th:href="@{/travel-time1}">PlaylistGenerator </a> </a>
             </li>
+<!--            <li><a href="labs.html">-->
+<!--                <div class="svg-space"></div> <a href="#" th:href="@{/playlistgen}" >Playlist generator</a> </a>-->
+<!--            </li>-->
             <li><a href="labs.html">
-                <div class="svg-space"></div> <a href="#" th:href="@{/playlistgen}" >Playlist generator</a> </a>
-            </li>
-            <li><a href="labs.html">
-                <div class="svg-space"></div> <a href="#" th:href="@{/api/users}" >Users</a> </a>
+                <div class="svg-space"></div> <a href="#" th:if="${isAuthenticated}" th:href="@{/users}">Users </a> </a>
             </li>
 
             <li class="bottom"><a href="#">
@@ -55,7 +59,7 @@
 
 
         <div class="page-title">
-           Top 9 Tracks
+           Generated Playlists
         </div>
     <br>
     <br>
@@ -127,3 +131,9 @@
 </body>
 
 </html>
+
+</a>
+<a href="#" th:if="${!isAuthenticated}">      <div class="fullscreen-gif">
+    <img  src="https://cdn.bg-mamma.com/HjOl/AMiS0.gif" alt="Your GIF">
+</div>
+</a>

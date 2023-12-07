@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -11,37 +12,48 @@
 </head>
 <body>
 
-<div class="jumbotron">
-    <div class="container-fluid">
-        <h1 th:text="#{playlist.welcome}">Find The Distance Between Two Places.</h1>
-        <form class="form-horizontal">
-            <div class="form-group">
-                <label for="from" class="col-xs-2 control-label"><i class="far fa-dot-circle"></i></label>
-                <div class="col-xs-4">
-                    <input type="text" id="from" placeholder="Origin" class="form-control">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="to" class="col-xs-2 control-label"><i class="fas fa-map-marker-alt"></i></label>
-                <div class="col-xs-4">
-                    <input type="text" id="to" placeholder="Destination" class="form-control">
-                </div>
-            </div>
-        </form>
+<a th:if="${isAuthenticated}" href="#">
+<form action="#" th:action="@{/travel-time}" th:method="get" id="travelTimeForm">
+    <h2>Travel Time Calculator</h2>
+    <label for="origin">Origin:</label>
+    <input type="text" id="origin" name="origin" required>
 
-        <div class="col-xs-offset-2 col-xs-10">
-            <button class="btn btn-info btn-lg " onclick="calcRoute();"><i class="fas fa-map-signs"></i></button>
-        </div>
-    </div>
-    <div class="container-fluid">
-        <div id="googleMap"></div>
-        <div id="output"></div>
-    </div>
+    <label for="destination">Destination:</label>
+    <input type="text" id="destination" name="destination" required>
+
+    <label for="calculatedTime">Calculated Travel Time:</label>
+    <input type="text" id="calculatedTime" th:value="${travelTime}" readonly>
+
+    <button type="button" onclick="calculateTravelTime()">Calculate Travel Time</button>
+    <button type="button" onclick="generatePlaylist()">Generate Playlist</button>
+    <a th:href="@{/home}" class="back-button">Back</a>
+</form>
+
+<div th:if="${travelTime}">
+    <p th:text="'Travel time: ' + ${travelTime}" />
 </div>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsNqaL4BIVnj9WmfAqLbo8VLQ52BJljm8&libraries=places"></script>
+
+</a>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="Scripts/jquery-3.1.1.min.js"></script>
-<script src="/js/PlayListGenerator.js"></script>
+
+
+<script>
+    function calculateTravelTime() {
+
+        $.get("/travel-time", $("#travelTimeForm").serialize(), function(data) {
+            $("#calculatedTime").val(data);
+        });
+    }
+
+
+</script>
+
 </body>
 </html>
+
+

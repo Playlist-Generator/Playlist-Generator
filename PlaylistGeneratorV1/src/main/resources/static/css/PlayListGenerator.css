@@ -1,70 +1,87 @@
-﻿body {
+﻿/* Reset some default styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    background: url('https://i.etsystatic.com/39688730/r/il/8b530c/4505600134/il_570xN.4505600134_2oof.jpg') center center fixed;
+    background-size: cover;
+}
+
+body {
     font-family: 'Poppins', sans-serif;
-    background-color: #f8f9fa;
 }
 
-.jumbotron {
-    background-color: #ffffff;
-    margin-top: 50px;
-    padding: 40px;
-    border-radius: 15px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+h2 {
+    color: #333;
+    text-align: center;
+    margin: 20px 0;
 }
 
-.container-fluid {
-    max-width: 800px;
-    margin: 0 auto;
+form {
+    background-color: whitesmoke;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-h1 {
-    color: #343a40;
+label {
+    display: block;
+    margin: 10px 0 5px;
 }
 
-p {
-    color: #6c757d;
-}
-
-.form-horizontal {
-    margin-top: 20px;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.control-label {
-    font-size: 24px;
-    color: #007bff;
-}
-
-.form-control {
-    width: 100%;
+input {
+    width: calc(100% - 22px);
     padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ced4da;
-    border-radius: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
 }
 
-.btn-info {
-    background-color: #007bff;
-    color: #ffffff;
-    font-size: 18px;
-    padding: 10px 20px;
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
     border: none;
-    border-radius: 5px;
+    border-radius: 3px;
     cursor: pointer;
 }
 
-.btn-info:hover {
-    background-color: #0056b3;
+button:hover {
+    background-color: #45a049;
 }
 
-#googleMap {
-    height: 300px;
-    margin-top: 20px;
+/* Add some spacing between elements */
+#calculatedTime {
+    margin-top: 10px;
 }
 
-#output {
+/* Style the result div */
+div {
+    background-color: white;
+    padding: 10px;
     margin-top: 20px;
-    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+    form {
+        width: 80%;
+    }
+}
+
+.fullscreen-gif {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;max-width: 100%;
+    max-height: 100%;
 }

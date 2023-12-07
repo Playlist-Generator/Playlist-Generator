@@ -28,17 +28,18 @@ public class AuthenticationMvcController {
     private final UserService userService;
     private final AuthenticationHelper authenticationHelper;
     private final UserMapper userMapper;
-
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     public AuthenticationMvcController(UserService userService,
                                        AuthenticationHelper authenticationHelper,
-                                       UserMapper userMapper
-    ) {
+                                       UserMapper userMapper,
+                                       BCryptPasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.authenticationHelper = authenticationHelper;
         this.userMapper = userMapper;
 
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/login")
@@ -62,7 +63,7 @@ public class AuthenticationMvcController {
 
             if (passwordEncoder.matches(login.getPassword(), user.getPassword())) {
                 session.setAttribute("currentUser", login.getUsername());
-                return "redirect:/";
+                return "redirect:/home";
             } else {
                 throw new AuthorizationException("Invalid username or password");
             }
@@ -101,7 +102,8 @@ public class AuthenticationMvcController {
         try {
             User user = userMapper.fromDto(register);
 
-
+            String encryptedPassword = passwordEncoder.encode(user.getPassword());
+            user.setPassword(encryptedPassword);
 
 
             userService.create(user);
