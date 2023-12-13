@@ -16,13 +16,16 @@ public class Playlists {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "title", length = 255)
+    @Column(name = "title")
     private String title;
     @Column(name = "total_playtime")
     private Integer totalPlaytime;
 
     @Column(name = "average_rank")
-    private Integer averageRank;
+    private long averageRank;
+
+    @Column(name = "photoUrl")
+    private String photoUrl;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -30,7 +33,7 @@ public class Playlists {
             joinColumns = {@JoinColumn(name = "playlist_id")},
             inverseJoinColumns = {@JoinColumn(name = "track_id")}
     )
-    private Set<Tracks> tracks;
+    private List<Tracks> tracks = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -46,6 +49,14 @@ public class Playlists {
 //    private List<Tracks> tracks;
    public Playlists() {
 
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 
     public void setTotalPlaytime(Integer totalPlaytime) {
@@ -88,11 +99,11 @@ public class Playlists {
         this.totalPlaytime = totalPlaytime;
     }
 
-    public int getAverageRank() {
+    public long getAverageRank() {
         return averageRank;
     }
 
-    public void setAverageRank(int averageRank) {
+    public void setAverageRank(long averageRank) {
         this.averageRank = averageRank;
     }
 
@@ -104,16 +115,35 @@ public class Playlists {
         this.mapDuration = mapDuration;
     }
 
-    public Set<Tracks> getTracks() {
+    public List<Tracks> getTracks() {
         return tracks;
     }
     public void setTracks(Set<Tracks> tracks) {
         if (this.tracks == null || this.tracks.isEmpty()) {
-            this.tracks = new HashSet<>();
+            this.tracks = new ArrayList<>();
         }
         this.tracks.addAll(tracks);
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setTracks(List<Tracks> tracks) {
+        this.tracks = tracks;
+    }
+
+    public Set<Genres> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(Set<Genres> genres) {
+        this.genres = genres;
+    }
 //    public void addTrack(Tracks track) {
 //        if (tracks == null) {
 //            tracks = new ArrayList<>();

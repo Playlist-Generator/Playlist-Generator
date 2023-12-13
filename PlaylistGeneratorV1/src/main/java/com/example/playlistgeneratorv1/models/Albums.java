@@ -17,12 +17,23 @@ public class Albums {
     @Column(name = "tracklist_url", length = 255)
     private String trackList;
 
+    @Column(name = "photoUrl")
+    private String photoUrl;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "genres_id")
     private Genres genre;
 
 
     public Albums() {
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 
     public long getId() {
