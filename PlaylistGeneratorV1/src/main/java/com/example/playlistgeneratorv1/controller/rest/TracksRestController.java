@@ -11,6 +11,7 @@ import com.example.playlistgeneratorv1.services.contracts.TrackServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -94,4 +95,15 @@ public class TracksRestController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
+
+    @GetMapping("/top10")
+    public List<Tracks> getTop10Tracks() {
+        List<Tracks> topTracks = trackServices.findTopTrackAcrossGenres(10);
+        if (topTracks.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Top tracks not found.");
+        }
+        return topTracks;
+    }
+
+
 }

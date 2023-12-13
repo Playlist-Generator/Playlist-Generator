@@ -1,59 +1,144 @@
 package com.example.playlistgeneratorv1.repositories;
 
+import com.example.playlistgeneratorv1.exceptions.EntityNotFoundException;
+import com.example.playlistgeneratorv1.models.PlaylistFilterOptions;
 import com.example.playlistgeneratorv1.models.Playlists;
 import com.example.playlistgeneratorv1.models.User;
 import com.example.playlistgeneratorv1.repositories.contracts.PlaylistRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Repository;
 import org.hibernate.query.Query;
-import com.example.playlistgeneratorv1.exceptions.EntityNotFoundException;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.*;
 
 @Repository
 public class PlaylistRepositoryImpl implements PlaylistRepository {
-
     private final SessionFactory sessionFactory;
+
 
     @Autowired
     public PlaylistRepositoryImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
-    @Override
-    public List<Playlists> getByUser(int userId) {
+    public List<Playlists> getAll(){
         try (Session session = sessionFactory.openSession()) {
-            Query<Playlists> query = session.createQuery(
-                    "from Playlists where user.id = :userId", Playlists.class);
-            query.setParameter("userId", userId);
+            Query<Playlists> query = session.createQuery("from Playlists ", Playlists.class);
+            List<Playlists> playlists = query.list();
+            return playlists;
+        }
+    }
+
+    @Override
+    public List<Playlists> getAllCount() {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Playlists> query = session.createQuery("from Playlists ", Playlists.class);
+            return query.list();
+        }
+    }
+
+    public List<Playlists> getUsersPlaylists(User user){
+        try (Session session = sessionFactory.openSession()) {
+            Query<Playlists> query = session.createQuery("FROM Playlists WHERE createdBy = :user", Playlists.class);
+            query.setParameter("user", user);
+            List<Playlists> playlists = query.list();
+            return playlists;
+        }
+    }
+
+    @Override
+    public List<Playlists> getHighestRank(){
+        try (Session session = sessionFactory.openSession()) {
+            Query<Playlists> query = session.createQuery("FROM Playlists ORDER BY rank DESC", Playlists.class);
+            query.setMaxResults(3);
             return query.list();
         }
     }
 
     @Override
-    public Playlists get(int id) {
+    public List<Playlists> get(PlaylistFilterOptions playlistFilterOptions) {
         try (Session session = sessionFactory.openSession()) {
+            List<String> filters = new ArrayList<>();
+            Map<String, Object> params = new HashMap<>();
+
+            playlistFilterOptions.getName().ifPresent(value -> {
+                filters.add(" name like :name ");
+                params.put("name", String.format("%%%s%%", value));
+            });
+
+            playlistFilterOptions.getDuration().ifPresent(value -> {
+                filters.add(" duration like :duration ");
+                params.put("duration", String.format("%%%s%%", value));
+            });
+
+            playlistFilterOptions.getGenre().ifPresent(value -> {
+                filters.add(" genre.type like :genre ");
+                params.put("genre", String.format("%%%s%%", value));
+            });
+
+            StringBuilder queryString = new StringBuilder("from Playlist ");
+            if (!filters.isEmpty()) {
+                queryString.append(" where ")
+                        .append(String.join(" and ", filters));
+            }
+
+
+            queryString.append(generateOrderBy(playlistFilterOptions));
+            Query<Playlists> query = session.createQuery(queryString.toString(), Playlists.class);
+            query.setProperties(params);
+            return query.list();
+        }
+    }
+
+    private String generateOrderBy(PlaylistFilterOptions playlistFilterOptions) {
+        if (playlistFilterOptions.getSortBy().isEmpty()) {
+            return "";
+        }
+        String orderBy = "";
+        switch (playlistFilterOptions.getSortBy().get()) {
+            case "name":
+                orderBy = "name";
+                break;
+            case "duration":
+                orderBy = "duration";
+                break;
+            case "genres":
+                orderBy = "genres.type";
+                break;
+            default:
+                return "";
+        }
+        orderBy = String.format(" order by %s", orderBy);
+        if (playlistFilterOptions.getSortOrder().isPresent()
+                && playlistFilterOptions.getSortOrder().get().equalsIgnoreCase("desc")) {
+            orderBy = String.format("%s desc", orderBy);
+        }
+        return orderBy;
+    }
+
+    @Override
+    public Playlists getByPlaylistId(int id) {
+        try (
+                Session session = sessionFactory.openSession()
+        ) {
             Playlists playlist = session.get(Playlists.class, id);
             if (playlist == null) {
-                throw new EntityNotFoundException("Playlists", id);
+                throw new EntityNotFoundException("Playlist", id);
             }
             return playlist;
         }
     }
 
+
     @Override
-    public Playlists create(Playlists playlist) {
+    public void create(Playlists playlist) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.save(playlist);
+            session.persist(playlist);
             session.getTransaction().commit();
         }
-        return playlist;
     }
 
     @Override
@@ -66,112 +151,12 @@ public class PlaylistRepositoryImpl implements PlaylistRepository {
     }
 
     @Override
-    public void delete(Playlists id) {
+    public void delete(int playlistId) {
+        Playlists playlistToDelete = getByPlaylistId(playlistId);
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            Playlists playlist = session.get(Playlists.class, id);
-            if (playlist == null) {
-                throw new EntityNotFoundException("Playlists", "id","%d");
-            }
-            session.remove(playlist);
+            session.remove(playlistToDelete);
             session.getTransaction().commit();
         }
     }
-
-    @Override
-    public List<Playlists> findAll(Specification<Playlists> filters, Pageable pageable) {
-        try (Session session = sessionFactory.openSession()) {
-            Query<Playlists> query = session.createQuery("from Playlists", Playlists.class);
-            return query.list();
-        }
-    }
-
-    @Override
-    public List<Playlists> getUserPlaylists(int id) {
-        try (Session session = sessionFactory.openSession()) {
-            Query<Playlists> query = session.createNativeQuery("SELECT * FROM playlists p WHERE p.user_id = :id"
-                    , Playlists.class);
-            query.setParameter("id", id);
-            return query.list();
-        }
-    }
-
-    @Override
-    public List<Playlists> getTopPlaylists() {
-        try (Session session = sessionFactory.openSession()) {
-            Query<Playlists> query = session.createNativeQuery
-                    ("SELECT * FROM playlists ORDER BY average_rank DESC LIMIT 10", Playlists.class);
-            return query.list();
-        }
-    }
-
-    @Override
-    public int getPlaylistsCount() {
-        try (Session session = sessionFactory.openSession()) {
-            Query<Object> query = session.createQuery("SELECT COUNT(*) FROM Playlists");
-            Object result = query.getSingleResult();
-            return Integer.parseInt(result.toString());
-        }
-    }
-
-    @Override
-    public int getPlaylistsCountByGenre(long id) {
-        try (Session session = sessionFactory.openSession()) {
-            Query<Object> query = session.createNativeQuery
-                    ("SELECT COUNT(*) FROM playlists_genres p WHERE p.genre_id = :genre");
-            query.setParameter("genre", id);
-            Object result = query.getSingleResult();
-            return Integer.parseInt(result.toString());
-        }
-    }
-
-    @Override
-    @Transactional
-    public void transferPlaylistsToDeletedUser(User deletedUser, User userToDelete) {
-        try (Session session = sessionFactory.openSession()) {
-            Query<Playlists> query = session.createQuery
-                    ("UPDATE Playlists l SET l.user = :deletedUser WHERE l.user = :userToDelete");
-            query.setParameter("deletedUser", deletedUser);
-            query.setParameter("userToDelete", userToDelete);
-            query.executeUpdate();
-        }
-    }
-
-//    @Override
-//    public void addTrack(int playlistId, int trackId) {
-//        try (Session session = sessionFactory.openSession()) {
-//            session.beginTransaction();
-//            Playlists playlist = session.get(Playlists.class, playlistId);
-//            if (playlist == null) {
-//                throw new EntityNotFoundException("Playlists", playlistId);
-//            }
-//
-//            Tracks track = session.get(Tracks.class, trackId);
-//            if (track == null) {
-//                throw new EntityNotFoundException("Tracks", trackId);
-//            }
-//
-//            playlist.addTrack(track);
-//            session.getTransaction().commit();
-//        }
-//    }
-//
-//    @Override
-//    public void removeTrack(int playlistId, int trackId) {
-//        try (Session session = sessionFactory.openSession()) {
-//            session.beginTransaction();
-//            Playlists playlist = session.get(Playlists.class, playlistId);
-//            if (playlist == null) {
-//                throw new EntityNotFoundException("Playlists", playlistId);
-//            }
-//
-//            Tracks track = session.get(Tracks.class, trackId);
-//            if (track == null) {
-//                throw new EntityNotFoundException("Tracks", trackId);
-//            }
-//
-//            playlist.removeTrack(track);
-//            session.getTransaction().commit();
-//        }
-//    }
 }

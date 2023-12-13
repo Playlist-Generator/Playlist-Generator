@@ -1,75 +1,107 @@
+
+CREATE DATABASE IF NOT EXISTS playlist CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE playlist;
+
+
 CREATE TABLE users (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  username VARCHAR(255),
-  password VARCHAR(255),
-  email VARCHAR(255),
-  profile_picture longtext    null,
-  is_admin BOOLEAN
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(255),
+    password VARCHAR(255),
+    email VARCHAR(255),
+    profile_picture LONGTEXT NULL,
+    is_admin BOOLEAN
 );
+
 
 CREATE TABLE genres (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  genre VARCHAR(20) not null
-
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    genre VARCHAR(20) NOT NULL
 );
+
 
 CREATE TABLE artists (
-  id BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL ,
-  name VARCHAR(255) collate utf8mb4_unicode_ci not null,
-  track_list longtext not null,
-   md5_image  longtext   null
+    id BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    name VARCHAR(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+    photoUrl LONGTEXT NULL,
+    track_list LONGTEXT NOT NULL
 );
+
 
 CREATE TABLE albums (
-  id BIGINT PRIMARY KEY AUTO_INCREMENT,
-  title VARCHAR(255),
-  tracklist_url VARCHAR(255),
-  genres_id INT,
-  md5_image  longtext   null,
-  FOREIGN KEY (genres_id) REFERENCES genres(id)
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(255),
+    tracklist_url VARCHAR(255),
+    genres_id INT,
+    photoUrl LONGTEXT NULL,
+    FOREIGN KEY (genres_id) REFERENCES genres(id)
 );
+
 
 CREATE TABLE playlists (
-  id INT PRIMARY KEY,
-  user_id INT,
-  title VARCHAR(255),
-  total_playtime double default 0 not null,
-  average_rank BIGINT not null,
-  md5_image  longtext   null,
-  FOREIGN KEY (user_id) REFERENCES users(id)
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    duration TIME NOT NULL,
+    user_id INT NOT NULL,
+    `rank` INT NOT NULL,
+    photoUrl LONGTEXT NOT NULL,
+    CONSTRAINT fk_playlists_users
+        FOREIGN KEY (user_id) REFERENCES users(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
 );
+
 
 CREATE TABLE tracks (
-  id BIGINT PRIMARY KEY AUTO_INCREMENT,
-  album_id BIGINT NOT NULL ,
-  genre_id INT NOT NULL ,
-  artist_id BIGINT NOT NULL ,
-  title LONGTEXT collate utf8mb4_unicode_ci NOT NULL,
-  duration DOUBLE DEFAULT 0 NOT NULL ,
-  ranks BIGINT NOT NULL ,
-  preview_url LONGTEXT NOT NULL ,
-  md5_image  longtext   null,
-  constraint tracks_albums_album_id_fk
-  FOREIGN KEY (album_id) REFERENCES albums(id),
-  constraint tracks_artists_artist_id_fk
-  FOREIGN KEY (genre_id) REFERENCES genres(id),
-  constraint tracks_genres_genre_id_fk
-  FOREIGN KEY (artist_id) REFERENCES artists(id)
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    album_id BIGINT NOT NULL,
+    genre_id INT NOT NULL,
+    artist_id BIGINT NOT NULL,
+    title LONGTEXT COLLATE utf8mb4_unicode_ci NOT NULL,
+    duration TIME DEFAULT '00:00:00' NOT NULL,
+    ranks BIGINT NOT NULL,
+    preview_url VARCHAR(255) NOT NULL,
+    md5_image LONGTEXT NOT NULL,
+    CONSTRAINT fk_tracks_albums
+        FOREIGN KEY (album_id) REFERENCES albums(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT fk_tracks_genres
+        FOREIGN KEY (genre_id) REFERENCES genres(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT fk_tracks_artists
+        FOREIGN KEY (artist_id) REFERENCES artists(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
 );
 
-CREATE TABLE track_playlist (
-  track_id BIGINT NOT NULL,
-  playlist_id INT NOT NULL,
-  FOREIGN KEY (track_id) REFERENCES tracks(id),
-  FOREIGN KEY (playlist_id) REFERENCES playlists(id)
+CREATE TABLE playlist_track (
+    playlist_id INT NOT NULL,
+    track_id BIGINT NOT NULL,
+    PRIMARY KEY (playlist_id, track_id),
+    CONSTRAINT fk_playlist_track_playlists
+        FOREIGN KEY (playlist_id) REFERENCES playlists(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT fk_playlist_track_tracks
+        FOREIGN KEY (track_id) REFERENCES tracks(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
 );
 
-create table playlists_genres
-(
-    playlist_id int not null,
-    genre_id    int not null,
-    constraint playlists_genres_id_fk
-        foreign key (genre_id) references genres (id),
-    constraint playlists_playlists_playlist_id_fk
-        foreign key (playlist_id) references playlists (id)
+
+CREATE INDEX idx_track_id ON playlist_track (track_id);
+
+
+CREATE TABLE playlists_genres (
+    playlist_id INT NOT NULL,
+    genre_id INT NOT NULL,
+    CONSTRAINT fk_playlists_genres_genres
+        FOREIGN KEY (genre_id) REFERENCES genres(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT fk_playlists_genres_playlists
+        FOREIGN KEY (playlist_id) REFERENCES playlists(id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
 );

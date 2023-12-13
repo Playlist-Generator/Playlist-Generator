@@ -14,9 +14,17 @@ import java.util.List;
 @RequestMapping("/")
 public class LandingPage {
 
+    private final TrackServices trackServices;
+
+    @Autowired
+    public LandingPage(TrackServices trackServices) {
+        this.trackServices = trackServices;
+    }
+
     @GetMapping
     public String showLandingPage(Model model) {
-        // Add logic to fetch other information for the landing page if needed
+        List<Tracks> topTracks = trackServices.findTopTrackAcrossGenres(10);
+        model.addAttribute("topTracks", topTracks);
         return "LandingPage";
     }
 }

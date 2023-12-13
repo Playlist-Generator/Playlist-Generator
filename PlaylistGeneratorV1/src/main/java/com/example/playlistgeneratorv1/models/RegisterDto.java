@@ -2,7 +2,7 @@ package com.example.playlistgeneratorv1.models;
 
 import jakarta.validation.constraints.NotEmpty;
 
-public class RegisterDto extends LoginDto {
+public class RegisterDto extends LoginDto  {
 
     @NotEmpty(message = "Password confirmation can't be empty")
 

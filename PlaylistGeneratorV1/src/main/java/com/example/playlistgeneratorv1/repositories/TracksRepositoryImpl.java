@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
 import org.hibernate.query.Query;
 import com.example.playlistgeneratorv1.exceptions.EntityNotFoundException;
 
-import java.util.List;
-import java.util.Set;
+import javax.sound.midi.Track;
+import java.util.*;
 
 @Repository
 public class TracksRepositoryImpl implements TracksRepository {
@@ -24,12 +24,14 @@ public class TracksRepositoryImpl implements TracksRepository {
     }
 
     @Override
-    public List<Tracks> get() {
+    public List<Tracks> getAll() {
         try (Session session = sessionFactory.openSession()) {
             Query<Tracks> query = session.createQuery("from Tracks", Tracks.class);
             return query.list();
         }
     }
+
+
 
     @Override
     public Tracks get(int id) {
@@ -160,6 +162,40 @@ public class TracksRepositoryImpl implements TracksRepository {
             return Set.copyOf(query.getResultList());
         }
     }
+    @Override
+    public List<String> getAllGenresFromTracks(List<Tracks> tracks) {
+        try (Session session = sessionFactory.openSession()) {
+            String hql = "SELECT DISTINCT g.genre FROM Tracks t JOIN t.genre g WHERE t IN (:tracks)";
+            Query<String> query = session.createQuery(hql, String.class);
+            query.setParameterList("tracks", tracks);
+            return query.list();
+        }
+    }
+    @Override
+    public Map<String, List<Tracks>> getTracksByGenres(List<String> genres) {
+        try (Session session = sessionFactory.openSession()) {
+            String hql = "SELECT t FROM Tracks t JOIN t.genre g WHERE g.genre IN (:genres)";
+            Query<Tracks> query = session.createQuery(hql, Tracks.class);
+            query.setParameterList("genres", genres);
+            List<Tracks> result = query.list();
+            if (result.isEmpty()) {
+                throw new EntityNotFoundException("Tracks", "genres", genres.toString());
+            }
+            Map<String, List<Tracks>> tracksByGenre = new HashMap<>();
+            for (String genre : genres) {
+                List<Tracks> genreTracks = new ArrayList<>();
+                for (Tracks track : result) {
+                    if (track.getGenre().getGenre().equals(genre)) {
+                        genreTracks.add(track);
+                    }
+                }
+                tracksByGenre.put(genre, genreTracks);
+            }
+
+            return tracksByGenre;
+        }
+    }
+
 
     @Override
     public Set<Tracks> findTopTrackByGenre(String genre, int limit) {
@@ -174,5 +210,14 @@ public class TracksRepositoryImpl implements TracksRepository {
         }
     }
 
+    @Override
+    public List<Tracks> findTopTrackAcrossGenres(int limit) {
+        try (var session = sessionFactory.openSession()) {
+            Query<Tracks> query = session.createQuery("SELECT t FROM Tracks t " +
+                    "ORDER BY t.ranks DESC", Tracks.class);
+            query.setMaxResults(limit);
+            return query.getResultList();
+        }
+    }
 
 }

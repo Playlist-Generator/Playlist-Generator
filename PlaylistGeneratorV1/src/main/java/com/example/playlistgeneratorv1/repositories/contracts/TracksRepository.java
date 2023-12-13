@@ -13,11 +13,13 @@ public interface TracksRepository {
     Tracks get(long id);
 
     Tracks get(String title);
-    List<Tracks> getByGenre(String genre);
+
+    Map<String, List<Tracks>> getTracksByGenres(List<String> genres);
     void create(Tracks track);
     void update(Tracks track);
 
     void delete(int id);
+
 
     double findAveragePlayTimeForGenre(String genre);
 

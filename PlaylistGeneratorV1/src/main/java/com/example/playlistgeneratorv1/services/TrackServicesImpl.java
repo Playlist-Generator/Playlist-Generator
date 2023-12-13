@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class TrackServicesImpl implements TrackServices {
@@ -70,6 +71,10 @@ public class TrackServicesImpl implements TrackServices {
         } catch (EntityNotFoundException e) {
             throw new EntityLongNotFoundException("Track", tracks.getId());
         }
+    }
+    @Override
+    public List<Tracks> findTopTrackAcrossGenres(int limit) {
+        return tracksRepository.findTopTrackAcrossGenres(limit);
     }
 
     @Override

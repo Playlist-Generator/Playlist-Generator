@@ -5,6 +5,7 @@ import com.example.playlistgeneratorv1.models.User;
 
 
 import java.util.List;
+import java.util.Set;
 
 public interface TrackServices {
 
@@ -19,4 +20,7 @@ public interface TrackServices {
 
     void update (Tracks tracks);
     void delete (int id, User users);
+    List<Tracks> findTopTrackAcrossGenres(int limit);
+
+
 }
