@@ -53,7 +53,6 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
 
-
     @Override
     public void create(User user) {
         try (Session session = sessionFactory.openSession()) {
@@ -62,6 +61,7 @@ public class UserRepositoryImpl implements UserRepository {
             session.getTransaction().commit();
         }
     }
+
     @Override
     public void update(int id, User updatedUser) {
         try (Session session = sessionFactory.openSession()) {
@@ -91,7 +91,15 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
+    @Override
+    public User getByEmail(String email) {
+        try (Session session = sessionFactory.openSession()) {
+            String queryString = "FROM User u WHERE u.email = :email";
+            Query<User> query = session.createQuery(queryString, User.class);
+            query.setParameter("email", email);
 
-
+            return query.uniqueResult();
+        }
+    }
 
 }

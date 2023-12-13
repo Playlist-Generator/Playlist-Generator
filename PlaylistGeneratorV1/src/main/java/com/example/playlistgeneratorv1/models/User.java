@@ -21,6 +21,8 @@ public class User {
     @Column(name = "email", nullable = false)
     private String email;
 
+    @Column(name = "profile_picture")
+    private String profile_picture;
     @Column(name = "is_admin", nullable = false)
     private boolean isAdmin;
 

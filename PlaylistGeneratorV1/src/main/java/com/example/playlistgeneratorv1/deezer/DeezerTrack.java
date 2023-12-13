@@ -29,4 +29,6 @@ public class DeezerTrack {
     private DeezerArtist artist;
     @JsonProperty("album")
     private DeezerAlbum album;
+    @JsonProperty("md5_image")
+    private String md5_image;
 }

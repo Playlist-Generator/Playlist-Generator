@@ -33,10 +33,29 @@ public class Tracks {
     @Column(name = "ranks")
     private int ranks;
 
-    @Column(name = "preview_url", length = 255)
+    @Column(name = "preview_url")
     private String previewUrl;
+
+    @Column(name = "md5_image")
+    private String md5_image;
    public Tracks(){
 
+    }
+
+    public int getRanks() {
+        return ranks;
+    }
+
+    public void setRanks(int ranks) {
+        this.ranks = ranks;
+    }
+
+    public String getMd5_image() {
+        return md5_image;
+    }
+
+    public void setMd5_image(String md5_image) {
+        this.md5_image = md5_image;
     }
 
     public long getId() {
@@ -86,15 +105,6 @@ public class Tracks {
     public void setDuration(Integer duration) {
         this.duration = duration;
     }
-
-    public Integer getRanks() {
-        return ranks;
-    }
-
-    public void setRanks(Integer ranks) {
-        this.ranks = ranks;
-    }
-
     public String getPreviewUrl() {
         return previewUrl;
     }

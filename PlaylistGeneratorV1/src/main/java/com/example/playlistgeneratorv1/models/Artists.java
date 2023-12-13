@@ -17,7 +17,18 @@ public class Artists {
     @Column(name = "track_list")
     private String trackList;
 
+    @Column(name = "photoUrl")
+    private String photoUrl;
+
     public Artists() {
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 
     public long getId() {

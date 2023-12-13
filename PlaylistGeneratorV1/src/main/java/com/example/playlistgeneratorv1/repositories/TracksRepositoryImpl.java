@@ -117,7 +117,7 @@ public class TracksRepositoryImpl implements TracksRepository {
 
     @Override
     public double findAveragePlayTimeForGenre(String genre) {
-        try (var session = sessionFactory.openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Query<Double> query = session.createQuery("SELECT AVG(t.duration) FROM Tracks t " +
                     "JOIN t.genre g WHERE g.genre = :genre", Double.class);
             query.setParameter("genre", genre);
@@ -127,7 +127,7 @@ public class TracksRepositoryImpl implements TracksRepository {
 
     @Override
     public Set<Tracks> findTrackByGenreAndDistinctArtist(String genre, int limit) {
-        try (var session = sessionFactory.openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Query<Tracks> query = session.createQuery("SELECT t FROM Tracks t " +
                     "JOIN t.genre g WHERE g.genre = :genre " +
                     "GROUP BY t.artist.id ORDER BY RANDOM()", Tracks.class);
@@ -139,7 +139,7 @@ public class TracksRepositoryImpl implements TracksRepository {
 
     @Override
     public Set<Tracks> findTopTrackByGenreAndDistinctArtist(String genre, int limit) {
-        try (var session = sessionFactory.openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Query<Tracks> query = session.createQuery("SELECT t FROM Tracks t " +
                     "JOIN t.genre g WHERE g.genre = :genre " +
                     "GROUP BY t.artist.id ORDER BY t.ranks DESC", Tracks.class);
@@ -151,7 +151,7 @@ public class TracksRepositoryImpl implements TracksRepository {
 
     @Override
     public Set<Tracks> findTrackByGenre(String genre, int limit) {
-        try (var session = sessionFactory.openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             Query<Tracks> query = session.createQuery("SELECT t FROM Tracks t " +
                     "JOIN t.genre g WHERE g.genre = :genre " +
                     "ORDER BY RANDOM()", Tracks.class);

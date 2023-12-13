@@ -11,4 +11,5 @@ public interface UserRepository {
     void delete(int id);
 
 
+    User getByEmail(String email);
 }

@@ -3,18 +3,21 @@ CREATE TABLE users (
   username VARCHAR(255),
   password VARCHAR(255),
   email VARCHAR(255),
+  profile_picture longtext    null,
   is_admin BOOLEAN
 );
 
 CREATE TABLE genres (
   id INT PRIMARY KEY AUTO_INCREMENT,
   genre VARCHAR(20) not null
+
 );
 
 CREATE TABLE artists (
   id BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL ,
   name VARCHAR(255) collate utf8mb4_unicode_ci not null,
-  track_list longtext not null
+  track_list longtext not null,
+   md5_image  longtext   null
 );
 
 CREATE TABLE albums (
@@ -22,6 +25,7 @@ CREATE TABLE albums (
   title VARCHAR(255),
   tracklist_url VARCHAR(255),
   genres_id INT,
+  md5_image  longtext   null,
   FOREIGN KEY (genres_id) REFERENCES genres(id)
 );
 
@@ -31,6 +35,7 @@ CREATE TABLE playlists (
   title VARCHAR(255),
   total_playtime double default 0 not null,
   average_rank BIGINT not null,
+  md5_image  longtext   null,
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
@@ -42,7 +47,8 @@ CREATE TABLE tracks (
   title LONGTEXT collate utf8mb4_unicode_ci NOT NULL,
   duration DOUBLE DEFAULT 0 NOT NULL ,
   ranks BIGINT NOT NULL ,
-  preview_url VARCHAR(255) NOT NULL ,
+  preview_url LONGTEXT NOT NULL ,
+  md5_image  longtext   null,
   constraint tracks_albums_album_id_fk
   FOREIGN KEY (album_id) REFERENCES albums(id),
   constraint tracks_artists_artist_id_fk

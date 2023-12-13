@@ -1,22 +1,28 @@
 package com.example.playlistgeneratorv1.models;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+
 import java.util.List;
+import java.util.Map;
 
 public class PlaylistDto {
-    private Integer id;
+    public static final String PLAYLIST_TITLE_LENGTH_ERROR = "Title must be between 4 and 40 symbols.";
+    @NotEmpty
+    @Size(min = 4, max = 40, message = PLAYLIST_TITLE_LENGTH_ERROR)
     private String title;
-    private String tags;
-    private Integer totalPlaytime;
-    private Integer averageRank;
-    private List<Tracks> tracks;
 
-    public Integer getId() {
-        return id;
-    }
+    @NotEmpty
+    private String from;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    @NotEmpty
+    private String to;
+
+    private Map<String, Double> genres;
+
+    private boolean useTopTracks;
+
+    private boolean tracksFromSameArtist;
 
     public String getTitle() {
         return title;
@@ -26,43 +32,43 @@ public class PlaylistDto {
         this.title = title;
     }
 
-    public String getTags() {
-        return tags;
+    public String getFrom() {
+        return from;
     }
 
-    public void setTags(String tags) {
-        this.tags = tags;
+    public void setFrom(String from) {
+        this.from = from;
     }
 
-    public Integer getTotalPlaytime() {
-        return totalPlaytime;
+    public String getTo() {
+        return to;
     }
 
-    public void setTotalPlaytime(Integer totalPlaytime) {
-        this.totalPlaytime = totalPlaytime;
+    public void setTo(String to) {
+        this.to = to;
     }
 
-    public Integer getAverageRank() {
-        return averageRank;
+    public Map<String, Double> getGenres() {
+        return genres;
     }
 
-    public void setAverageRank(Integer averageRank) {
-        this.averageRank = averageRank;
+    public void setGenres(Map<String, Double> genres) {
+        this.genres = genres;
     }
 
-    public List<Tracks> getTracks() {
-        return tracks;
+    public boolean isUseTopTracks() {
+        return useTopTracks;
     }
 
-    public void setTracks(List<Tracks> tracks) {
-        this.tracks = tracks;
+    public void setUseTopTracks(boolean useTopTracks) {
+        this.useTopTracks = useTopTracks;
     }
 
-    public PlaylistDto(Integer id, String title, String tags, Integer totalPlaytime, Integer averageRank) {
-        this.id = id;
-        this.title = title;
-        this.tags = tags;
-        this.totalPlaytime = totalPlaytime;
-        this.averageRank = averageRank;
+    public boolean isTracksFromSameArtist() {
+        return tracksFromSameArtist;
+    }
+
+    public void setTracksFromSameArtist(boolean tracksFromSameArtist) {
+        this.tracksFromSameArtist = tracksFromSameArtist;
     }
 }
