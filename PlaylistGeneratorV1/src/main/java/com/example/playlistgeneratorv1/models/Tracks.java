@@ -1,6 +1,7 @@
 package com.example.playlistgeneratorv1.models;
 import jakarta.persistence.*;
 
+import java.sql.Time;
 import java.util.Objects;
 
 @Entity
@@ -28,7 +29,7 @@ public class Tracks {
     private String title;
 
     @Column(name = "duration")
-    private Integer duration;
+    private Time duration;
 
     @Column(name = "ranks")
     private int ranks;
@@ -98,11 +99,11 @@ public class Tracks {
         this.title = title;
     }
 
-    public Integer getDuration() {
+    public Time getDuration() {
         return duration;
     }
 
-    public void setDuration(Integer duration) {
+    public void setDuration(Time duration) {
         this.duration = duration;
     }
     public String getPreviewUrl() {

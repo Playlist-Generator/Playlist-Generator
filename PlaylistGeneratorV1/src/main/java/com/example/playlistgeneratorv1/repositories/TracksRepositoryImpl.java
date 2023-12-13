@@ -24,6 +24,14 @@ public class TracksRepositoryImpl implements TracksRepository {
     }
 
     @Override
+    public List<Tracks> get() {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Tracks> query = session.createQuery("from Tracks", Tracks.class);
+            return query.list();
+        }
+    }
+
+    @Override
     public List<Tracks> getAll() {
         try (Session session = sessionFactory.openSession()) {
             Query<Tracks> query = session.createQuery("from Tracks", Tracks.class);

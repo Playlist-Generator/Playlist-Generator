@@ -15,6 +15,7 @@ import java.sql.Time;
 import java.util.Optional;
 
 import java.util.List;
+
 import java.util.stream.Stream;
 
 @Service
@@ -110,11 +111,14 @@ public class DeezerServiceImpl implements DeezerService {
             track.setId(deezerTrack.getId());
             track.setTitle(deezerTrack.getTitle());
             track.setRanks(deezerTrack.getRank());
-            track.setDuration(deezerTrack.getDuration());
             track.setPreviewUrl(deezerTrack.getPreview());
             track.setArtist(artist);
             track.setAlbum(album);
             track.setGenre(genreRepository.findByName(genre));
+            int durationInSeconds = deezerTrack.getDuration();
+            Time durationTime = new Time(durationInSeconds);
+            track.setDuration(durationTime);
+            track.setMd5_image(deezerTrack.getMd5_image());
             trackRepository.create(track);
         });
     }
@@ -125,7 +129,10 @@ public class DeezerServiceImpl implements DeezerService {
         {
             artist.setId(deezer.getId());
             artist.setName(deezer.getName());
-            artist.setTrackList(deezer.getTrackList()); });
+            artist.setTrackList(deezer.getTrackList());
+            artist.setPhotoUrl(deezer.getPhotoUrl());
+
+        });
             artistRepository.create(artist);
         return artist;
     }
@@ -135,6 +142,7 @@ public class DeezerServiceImpl implements DeezerService {
         album.setId(deezerAlbum.getId());
         album.setTitle(deezerAlbum.getTitle());
         album.setTrackList(deezerAlbum.getTrackList());
+        album.setPhotoUrl(deezerAlbum.getPhotoUrl());
         albumRepository.create(album);
         return album;
     }
